@@ -1,6 +1,6 @@
 # GO-WebView2
 
-Use Microsoft Edge WebView2 Control excel in golang.
+Use Microsoft Edge WebView2 Control in golang.
 
 ## Source code
 
