@@ -16,6 +16,9 @@ type ICoreWebView2ContextMenuItem struct {
 }
 
 func NewICoreWebView2ContextMenuItem(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ContextMenuItem {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ContextMenuItem)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -54,12 +57,10 @@ func (this *ICoreWebView2ContextMenuItem) GetShortcutKeyDescription(value *win32
 	return com.Error(ret)
 }
 
-func (this *ICoreWebView2ContextMenuItem) GetIcon(value **com.UnknownClass) com.Error {
+func (this *ICoreWebView2ContextMenuItem) GetIcon(value **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 
@@ -96,9 +97,7 @@ func (this *ICoreWebView2ContextMenuItem) GetIsChecked(value *int32) com.Error {
 func (this *ICoreWebView2ContextMenuItem) GetChildren(value **ICoreWebView2ContextMenuItemCollection) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 

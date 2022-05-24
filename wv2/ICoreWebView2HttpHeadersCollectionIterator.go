@@ -16,6 +16,9 @@ type ICoreWebView2HttpHeadersCollectionIterator struct {
 }
 
 func NewICoreWebView2HttpHeadersCollectionIterator(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2HttpHeadersCollectionIterator {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2HttpHeadersCollectionIterator)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

@@ -16,6 +16,9 @@ type ICoreWebView2Controller struct {
 }
 
 func NewICoreWebView2Controller(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Controller {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Controller)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -165,9 +168,7 @@ func (this *ICoreWebView2Controller) Close() com.Error {
 func (this *ICoreWebView2Controller) GetCoreWebView2(coreWebView2 **ICoreWebView2) com.Error {
 	addr := (*this.LpVtbl)[25]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(coreWebView2)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*coreWebView2).IUnknown))
-	}
+		com.AddToScope(coreWebView2)
 	return com.Error(ret)
 }
 

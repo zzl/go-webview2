@@ -16,6 +16,9 @@ type ICoreWebView2CookieList struct {
 }
 
 func NewICoreWebView2CookieList(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2CookieList {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2CookieList)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -39,9 +42,7 @@ func (this *ICoreWebView2CookieList) GetCount(count *uint32) com.Error {
 func (this *ICoreWebView2CookieList) GetValueAtIndex(index uint32, cookie **ICoreWebView2Cookie) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(cookie)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*cookie).IUnknown))
-	}
+		com.AddToScope(cookie)
 	return com.Error(ret)
 }
 

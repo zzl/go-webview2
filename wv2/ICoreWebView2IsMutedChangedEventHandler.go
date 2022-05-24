@@ -17,7 +17,7 @@ type ICoreWebView2IsMutedChangedEventHandler struct {
 
 type ICoreWebView2IsMutedChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2IsMutedChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2IsMutedChangedEventHandlerImpl) QueryInterface(riid *sy
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2IsMutedChangedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2IsMutedChangedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2IsMutedChangedEventHandlerComObj) impl() ICoreWebView2I
 	return this.Impl().(ICoreWebView2IsMutedChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2IsMutedChangedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2IsMutedChangedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2IsMutedChangedEventHandler(impl ICoreWebView2IsMutedChanged
 //
 type ICoreWebView2IsMutedChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2IsMutedChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2IsMutedChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2IsMutedChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2IsMutedChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2IsMutedChangedEventHandler {
+func NewICoreWebView2IsMutedChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2IsMutedChangedEventHandler {
 	impl := &ICoreWebView2IsMutedChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2IsMutedChangedEventHandlerComObj(impl, scoped).ICoreWebView2IsMutedChangedEventHandler()
 }

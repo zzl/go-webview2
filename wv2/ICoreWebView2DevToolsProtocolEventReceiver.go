@@ -16,6 +16,9 @@ type ICoreWebView2DevToolsProtocolEventReceiver struct {
 }
 
 func NewICoreWebView2DevToolsProtocolEventReceiver(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2DevToolsProtocolEventReceiver {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2DevToolsProtocolEventReceiver)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

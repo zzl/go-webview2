@@ -16,6 +16,9 @@ type ICoreWebView2NewWindowRequestedEventArgs2 struct {
 }
 
 func NewICoreWebView2NewWindowRequestedEventArgs2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2NewWindowRequestedEventArgs2 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2NewWindowRequestedEventArgs2)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

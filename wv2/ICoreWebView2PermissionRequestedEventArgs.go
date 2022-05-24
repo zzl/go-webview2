@@ -16,6 +16,9 @@ type ICoreWebView2PermissionRequestedEventArgs struct {
 }
 
 func NewICoreWebView2PermissionRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2PermissionRequestedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2PermissionRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -63,9 +66,7 @@ func (this *ICoreWebView2PermissionRequestedEventArgs) SetState(state int32) com
 func (this *ICoreWebView2PermissionRequestedEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[8]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*deferral).IUnknown))
-	}
+		com.AddToScope(deferral)
 	return com.Error(ret)
 }
 

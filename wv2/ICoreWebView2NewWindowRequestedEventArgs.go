@@ -16,6 +16,9 @@ type ICoreWebView2NewWindowRequestedEventArgs struct {
 }
 
 func NewICoreWebView2NewWindowRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2NewWindowRequestedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2NewWindowRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -45,9 +48,7 @@ func (this *ICoreWebView2NewWindowRequestedEventArgs) SetNewWindow(newWindow *IC
 func (this *ICoreWebView2NewWindowRequestedEventArgs) GetNewWindow(newWindow **ICoreWebView2) com.Error {
 	addr := (*this.LpVtbl)[5]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(newWindow)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*newWindow).IUnknown))
-	}
+		com.AddToScope(newWindow)
 	return com.Error(ret)
 }
 
@@ -72,18 +73,14 @@ func (this *ICoreWebView2NewWindowRequestedEventArgs) GetIsUserInitiated(isUserI
 func (this *ICoreWebView2NewWindowRequestedEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*deferral).IUnknown))
-	}
+		com.AddToScope(deferral)
 	return com.Error(ret)
 }
 
 func (this *ICoreWebView2NewWindowRequestedEventArgs) GetWindowFeatures(value **ICoreWebView2WindowFeatures) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 

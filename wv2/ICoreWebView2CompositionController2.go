@@ -16,6 +16,9 @@ type ICoreWebView2CompositionController2 struct {
 }
 
 func NewICoreWebView2CompositionController2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2CompositionController2 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2CompositionController2)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -30,12 +33,10 @@ func (this *ICoreWebView2CompositionController2) IID() *syscall.GUID {
 	return &IID_ICoreWebView2CompositionController2
 }
 
-func (this *ICoreWebView2CompositionController2) GetAutomationProvider(provider **com.UnknownClass) com.Error {
+func (this *ICoreWebView2CompositionController2) GetAutomationProvider(provider **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(provider)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*provider).IUnknown))
-	}
+		com.AddToScope(provider)
 	return com.Error(ret)
 }
 

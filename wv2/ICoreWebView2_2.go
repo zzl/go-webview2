@@ -16,6 +16,9 @@ type ICoreWebView2_2 struct {
 }
 
 func NewICoreWebView2_2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2_2 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2_2)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -63,18 +66,14 @@ func (this *ICoreWebView2_2) Remove_DOMContentLoaded(token EventRegistrationToke
 func (this *ICoreWebView2_2) GetCookieManager(cookieManager **ICoreWebView2CookieManager) com.Error {
 	addr := (*this.LpVtbl)[66]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(cookieManager)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*cookieManager).IUnknown))
-	}
+		com.AddToScope(cookieManager)
 	return com.Error(ret)
 }
 
 func (this *ICoreWebView2_2) GetEnvironment(environment **ICoreWebView2Environment) com.Error {
 	addr := (*this.LpVtbl)[67]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(environment)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*environment).IUnknown))
-	}
+		com.AddToScope(environment)
 	return com.Error(ret)
 }
 

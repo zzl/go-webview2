@@ -17,7 +17,7 @@ type ICoreWebView2CursorChangedEventHandler struct {
 
 type ICoreWebView2CursorChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2CompositionController, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2CursorChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2CursorChangedEventHandlerImpl) QueryInterface(riid *sys
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2CursorChangedEventHandlerImpl) Invoke(sender *ICoreWebView2CompositionController, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2CursorChangedEventHandlerImpl) Invoke(sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2CursorChangedEventHandlerComObj) impl() ICoreWebView2Cu
 	return this.Impl().(ICoreWebView2CursorChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2CursorChangedEventHandlerComObj) Invoke(sender *ICoreWebView2CompositionController, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2CursorChangedEventHandlerComObj) Invoke(sender *ICoreWebView2CompositionController, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2CursorChangedEventHandler(impl ICoreWebView2CursorChangedEv
 //
 type ICoreWebView2CursorChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2CursorChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2CompositionController, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2CursorChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2CompositionController, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2CursorChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2CursorChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2CompositionController, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2CursorChangedEventHandler {
+func NewICoreWebView2CursorChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2CursorChangedEventHandler {
 	impl := &ICoreWebView2CursorChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2CursorChangedEventHandlerComObj(impl, scoped).ICoreWebView2CursorChangedEventHandler()
 }

@@ -16,6 +16,9 @@ type ICoreWebView2ControllerOptions struct {
 }
 
 func NewICoreWebView2ControllerOptions(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ControllerOptions {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ControllerOptions)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

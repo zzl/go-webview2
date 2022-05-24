@@ -16,6 +16,9 @@ type ICoreWebView2DownloadOperation struct {
 }
 
 func NewICoreWebView2DownloadOperation(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2DownloadOperation {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2DownloadOperation)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

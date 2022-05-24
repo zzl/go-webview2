@@ -17,7 +17,7 @@ type ICoreWebView2FocusChangedEventHandler struct {
 
 type ICoreWebView2FocusChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2FocusChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2FocusChangedEventHandlerImpl) QueryInterface(riid *sysc
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2FocusChangedEventHandlerImpl) Invoke(sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2FocusChangedEventHandlerImpl) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2FocusChangedEventHandlerComObj) impl() ICoreWebView2Foc
 	return this.Impl().(ICoreWebView2FocusChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2FocusChangedEventHandlerComObj) Invoke(sender *ICoreWebView2Controller, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2FocusChangedEventHandlerComObj) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2FocusChangedEventHandler(impl ICoreWebView2FocusChangedEven
 //
 type ICoreWebView2FocusChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2FocusChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2FocusChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2FocusChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2FocusChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2FocusChangedEventHandler {
+func NewICoreWebView2FocusChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2FocusChangedEventHandler {
 	impl := &ICoreWebView2FocusChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2FocusChangedEventHandlerComObj(impl, scoped).ICoreWebView2FocusChangedEventHandler()
 }

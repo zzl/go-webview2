@@ -16,6 +16,9 @@ type ICoreWebView2Environment7 struct {
 }
 
 func NewICoreWebView2Environment7(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Environment7 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Environment7)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

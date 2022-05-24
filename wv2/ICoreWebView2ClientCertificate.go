@@ -16,6 +16,9 @@ type ICoreWebView2ClientCertificate struct {
 }
 
 func NewICoreWebView2ClientCertificate(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ClientCertificate {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ClientCertificate)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -75,9 +78,7 @@ func (this *ICoreWebView2ClientCertificate) ToPemEncoding(pemEncodedData *win32.
 func (this *ICoreWebView2ClientCertificate) GetPemEncodedIssuerCertificateChain(value **ICoreWebView2StringCollection) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 

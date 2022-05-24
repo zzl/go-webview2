@@ -17,7 +17,7 @@ type ICoreWebView2IsDocumentPlayingAudioChangedEventHandler struct {
 
 type ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerImpl) QueryInt
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj) impl()
 	return this.Impl().(ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2IsDocumentPlayingAudioChangedEventHandler(impl ICoreWebView
 //
 type ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2IsDocumentPlayingAudioChangedEventHandler {
+func NewICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2IsDocumentPlayingAudioChangedEventHandler {
 	impl := &ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj(impl, scoped).ICoreWebView2IsDocumentPlayingAudioChangedEventHandler()
 }

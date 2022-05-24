@@ -16,6 +16,9 @@ type ICoreWebView2WebResourceResponse struct {
 }
 
 func NewICoreWebView2WebResourceResponse(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2WebResourceResponse {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2WebResourceResponse)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -30,12 +33,10 @@ func (this *ICoreWebView2WebResourceResponse) IID() *syscall.GUID {
 	return &IID_ICoreWebView2WebResourceResponse
 }
 
-func (this *ICoreWebView2WebResourceResponse) GetContent(content **com.UnknownClass) com.Error {
+func (this *ICoreWebView2WebResourceResponse) GetContent(content **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(content)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*content).IUnknown))
-	}
+		com.AddToScope(content)
 	return com.Error(ret)
 }
 
@@ -48,9 +49,7 @@ func (this *ICoreWebView2WebResourceResponse) SetContent(content *win32.IStream)
 func (this *ICoreWebView2WebResourceResponse) GetHeaders(headers **ICoreWebView2HttpResponseHeaders) com.Error {
 	addr := (*this.LpVtbl)[5]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(headers)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*headers).IUnknown))
-	}
+		com.AddToScope(headers)
 	return com.Error(ret)
 }
 

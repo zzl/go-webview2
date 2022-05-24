@@ -17,7 +17,7 @@ type ICoreWebView2FrameNameChangedEventHandler struct {
 
 type ICoreWebView2FrameNameChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2FrameNameChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2FrameNameChangedEventHandlerImpl) QueryInterface(riid *
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2FrameNameChangedEventHandlerImpl) Invoke(sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2FrameNameChangedEventHandlerImpl) Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2FrameNameChangedEventHandlerComObj) impl() ICoreWebView
 	return this.Impl().(ICoreWebView2FrameNameChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2FrameNameChangedEventHandlerComObj) Invoke(sender *ICoreWebView2Frame, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2FrameNameChangedEventHandlerComObj) Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2FrameNameChangedEventHandler(impl ICoreWebView2FrameNameCha
 //
 type ICoreWebView2FrameNameChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2FrameNameChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2FrameNameChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2FrameNameChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2FrameNameChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2FrameNameChangedEventHandler {
+func NewICoreWebView2FrameNameChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2FrameNameChangedEventHandler {
 	impl := &ICoreWebView2FrameNameChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2FrameNameChangedEventHandlerComObj(impl, scoped).ICoreWebView2FrameNameChangedEventHandler()
 }

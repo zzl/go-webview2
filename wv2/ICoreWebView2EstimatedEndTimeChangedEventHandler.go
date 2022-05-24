@@ -17,7 +17,7 @@ type ICoreWebView2EstimatedEndTimeChangedEventHandler struct {
 
 type ICoreWebView2EstimatedEndTimeChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2EstimatedEndTimeChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerImpl) QueryInterface
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerComObj) impl() ICore
 	return this.Impl().(ICoreWebView2EstimatedEndTimeChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerComObj) Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerComObj) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2EstimatedEndTimeChangedEventHandler(impl ICoreWebView2Estim
 //
 type ICoreWebView2EstimatedEndTimeChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2EstimatedEndTimeChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2EstimatedEndTimeChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2EstimatedEndTimeChangedEventHandler {
+func NewICoreWebView2EstimatedEndTimeChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2EstimatedEndTimeChangedEventHandler {
 	impl := &ICoreWebView2EstimatedEndTimeChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2EstimatedEndTimeChangedEventHandlerComObj(impl, scoped).ICoreWebView2EstimatedEndTimeChangedEventHandler()
 }

@@ -16,6 +16,9 @@ type ICoreWebView2Environment10 struct {
 }
 
 func NewICoreWebView2Environment10(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Environment10 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Environment10)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ICoreWebView2Environment10) IID() *syscall.GUID {
 func (this *ICoreWebView2Environment10) CreateCoreWebView2ControllerOptions(options **ICoreWebView2ControllerOptions) com.Error {
 	addr := (*this.LpVtbl)[20]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(options)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*options).IUnknown))
-	}
+		com.AddToScope(options)
 	return com.Error(ret)
 }
 

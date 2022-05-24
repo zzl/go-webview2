@@ -16,6 +16,9 @@ type ICoreWebView2ProcessInfo struct {
 }
 
 func NewICoreWebView2ProcessInfo(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ProcessInfo {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ProcessInfo)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

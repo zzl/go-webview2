@@ -17,7 +17,7 @@ type ICoreWebView2CustomItemSelectedEventHandler struct {
 
 type ICoreWebView2CustomItemSelectedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2ContextMenuItem, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2ContextMenuItem, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2CustomItemSelectedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2CustomItemSelectedEventHandlerImpl) QueryInterface(riid
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2CustomItemSelectedEventHandlerImpl) Invoke(sender *ICoreWebView2ContextMenuItem, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2CustomItemSelectedEventHandlerImpl) Invoke(sender *ICoreWebView2ContextMenuItem, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2CustomItemSelectedEventHandlerComObj) impl() ICoreWebVi
 	return this.Impl().(ICoreWebView2CustomItemSelectedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2CustomItemSelectedEventHandlerComObj) Invoke(sender *ICoreWebView2ContextMenuItem, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2CustomItemSelectedEventHandlerComObj) Invoke(sender *ICoreWebView2ContextMenuItem, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2CustomItemSelectedEventHandler(impl ICoreWebView2CustomItem
 //
 type ICoreWebView2CustomItemSelectedEventHandlerByFuncImpl struct {
 	ICoreWebView2CustomItemSelectedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2ContextMenuItem, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2ContextMenuItem, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2CustomItemSelectedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2ContextMenuItem, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2CustomItemSelectedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2ContextMenuItem, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2CustomItemSelectedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2ContextMenuItem, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2CustomItemSelectedEventHandler {
+func NewICoreWebView2CustomItemSelectedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2ContextMenuItem, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2CustomItemSelectedEventHandler {
 	impl := &ICoreWebView2CustomItemSelectedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2CustomItemSelectedEventHandlerComObj(impl, scoped).ICoreWebView2CustomItemSelectedEventHandler()
 }

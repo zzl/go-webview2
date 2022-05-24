@@ -16,6 +16,9 @@ type ICoreWebView2ContextMenuRequestedEventArgs struct {
 }
 
 func NewICoreWebView2ContextMenuRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ContextMenuRequestedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ContextMenuRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,18 +36,14 @@ func (this *ICoreWebView2ContextMenuRequestedEventArgs) IID() *syscall.GUID {
 func (this *ICoreWebView2ContextMenuRequestedEventArgs) GetMenuItems(value **ICoreWebView2ContextMenuItemCollection) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 
 func (this *ICoreWebView2ContextMenuRequestedEventArgs) GetContextMenuTarget(value **ICoreWebView2ContextMenuTarget) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 
@@ -81,9 +80,7 @@ func (this *ICoreWebView2ContextMenuRequestedEventArgs) GetHandled(value *int32)
 func (this *ICoreWebView2ContextMenuRequestedEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*deferral).IUnknown))
-	}
+		com.AddToScope(deferral)
 	return com.Error(ret)
 }
 

@@ -16,6 +16,9 @@ type ICoreWebView2MoveFocusRequestedEventArgs struct {
 }
 
 func NewICoreWebView2MoveFocusRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2MoveFocusRequestedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2MoveFocusRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

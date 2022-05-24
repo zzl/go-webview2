@@ -16,6 +16,9 @@ type ICoreWebView2BrowserProcessExitedEventArgs struct {
 }
 
 func NewICoreWebView2BrowserProcessExitedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2BrowserProcessExitedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2BrowserProcessExitedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

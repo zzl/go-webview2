@@ -16,6 +16,9 @@ type ICoreWebView2NavigationCompletedEventArgs struct {
 }
 
 func NewICoreWebView2NavigationCompletedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2NavigationCompletedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2NavigationCompletedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

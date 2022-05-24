@@ -16,6 +16,9 @@ type ICoreWebView2PrintSettings struct {
 }
 
 func NewICoreWebView2PrintSettings(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2PrintSettings {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2PrintSettings)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

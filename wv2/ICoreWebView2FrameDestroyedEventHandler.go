@@ -17,7 +17,7 @@ type ICoreWebView2FrameDestroyedEventHandler struct {
 
 type ICoreWebView2FrameDestroyedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2FrameDestroyedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2FrameDestroyedEventHandlerImpl) QueryInterface(riid *sy
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2FrameDestroyedEventHandlerImpl) Invoke(sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2FrameDestroyedEventHandlerImpl) Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2FrameDestroyedEventHandlerComObj) impl() ICoreWebView2F
 	return this.Impl().(ICoreWebView2FrameDestroyedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2FrameDestroyedEventHandlerComObj) Invoke(sender *ICoreWebView2Frame, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2FrameDestroyedEventHandlerComObj) Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2FrameDestroyedEventHandler(impl ICoreWebView2FrameDestroyed
 //
 type ICoreWebView2FrameDestroyedEventHandlerByFuncImpl struct {
 	ICoreWebView2FrameDestroyedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2FrameDestroyedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2FrameDestroyedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2FrameDestroyedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Frame, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2FrameDestroyedEventHandler {
+func NewICoreWebView2FrameDestroyedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2FrameDestroyedEventHandler {
 	impl := &ICoreWebView2FrameDestroyedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2FrameDestroyedEventHandlerComObj(impl, scoped).ICoreWebView2FrameDestroyedEventHandler()
 }

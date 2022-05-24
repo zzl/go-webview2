@@ -16,6 +16,9 @@ type ICoreWebView2ScriptDialogOpeningEventArgs struct {
 }
 
 func NewICoreWebView2ScriptDialogOpeningEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ScriptDialogOpeningEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ScriptDialogOpeningEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -75,9 +78,7 @@ func (this *ICoreWebView2ScriptDialogOpeningEventArgs) SetResultText(resultText 
 func (this *ICoreWebView2ScriptDialogOpeningEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*deferral).IUnknown))
-	}
+		com.AddToScope(deferral)
 	return com.Error(ret)
 }
 

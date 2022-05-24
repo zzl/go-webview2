@@ -16,6 +16,9 @@ type ICoreWebView2FrameCreatedEventArgs struct {
 }
 
 func NewICoreWebView2FrameCreatedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2FrameCreatedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2FrameCreatedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ICoreWebView2FrameCreatedEventArgs) IID() *syscall.GUID {
 func (this *ICoreWebView2FrameCreatedEventArgs) GetFrame(frame **ICoreWebView2Frame) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(frame)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*frame).IUnknown))
-	}
+		com.AddToScope(frame)
 	return com.Error(ret)
 }
 

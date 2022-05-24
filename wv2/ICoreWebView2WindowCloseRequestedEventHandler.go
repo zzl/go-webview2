@@ -17,7 +17,7 @@ type ICoreWebView2WindowCloseRequestedEventHandler struct {
 
 type ICoreWebView2WindowCloseRequestedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2WindowCloseRequestedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2WindowCloseRequestedEventHandlerImpl) QueryInterface(ri
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2WindowCloseRequestedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2WindowCloseRequestedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2WindowCloseRequestedEventHandlerComObj) impl() ICoreWeb
 	return this.Impl().(ICoreWebView2WindowCloseRequestedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2WindowCloseRequestedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2WindowCloseRequestedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2WindowCloseRequestedEventHandler(impl ICoreWebView2WindowCl
 //
 type ICoreWebView2WindowCloseRequestedEventHandlerByFuncImpl struct {
 	ICoreWebView2WindowCloseRequestedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2WindowCloseRequestedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2WindowCloseRequestedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2WindowCloseRequestedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2WindowCloseRequestedEventHandler {
+func NewICoreWebView2WindowCloseRequestedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2WindowCloseRequestedEventHandler {
 	impl := &ICoreWebView2WindowCloseRequestedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2WindowCloseRequestedEventHandlerComObj(impl, scoped).ICoreWebView2WindowCloseRequestedEventHandler()
 }

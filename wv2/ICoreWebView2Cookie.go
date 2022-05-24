@@ -16,6 +16,9 @@ type ICoreWebView2Cookie struct {
 }
 
 func NewICoreWebView2Cookie(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Cookie {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Cookie)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

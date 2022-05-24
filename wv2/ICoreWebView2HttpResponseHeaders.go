@@ -16,6 +16,9 @@ type ICoreWebView2HttpResponseHeaders struct {
 }
 
 func NewICoreWebView2HttpResponseHeaders(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2HttpResponseHeaders {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2HttpResponseHeaders)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -51,18 +54,14 @@ func (this *ICoreWebView2HttpResponseHeaders) GetHeader(name string, value *win3
 func (this *ICoreWebView2HttpResponseHeaders) GetHeaders(name string, iterator **ICoreWebView2HttpHeadersCollectionIterator) com.Error {
 	addr := (*this.LpVtbl)[6]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(name)), uintptr(unsafe.Pointer(iterator)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*iterator).IUnknown))
-	}
+		com.AddToScope(iterator)
 	return com.Error(ret)
 }
 
 func (this *ICoreWebView2HttpResponseHeaders) GetIterator(iterator **ICoreWebView2HttpHeadersCollectionIterator) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(iterator)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*iterator).IUnknown))
-	}
+		com.AddToScope(iterator)
 	return com.Error(ret)
 }
 

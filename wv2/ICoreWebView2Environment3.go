@@ -16,6 +16,9 @@ type ICoreWebView2Environment3 struct {
 }
 
 func NewICoreWebView2Environment3(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Environment3 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Environment3)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -39,9 +42,7 @@ func (this *ICoreWebView2Environment3) CreateCoreWebView2CompositionController(p
 func (this *ICoreWebView2Environment3) CreateCoreWebView2PointerInfo(pointerInfo **ICoreWebView2PointerInfo) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(pointerInfo)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*pointerInfo).IUnknown))
-	}
+		com.AddToScope(pointerInfo)
 	return com.Error(ret)
 }
 

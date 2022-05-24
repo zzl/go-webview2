@@ -16,6 +16,9 @@ type ICoreWebView2NavigationStartingEventArgs2 struct {
 }
 
 func NewICoreWebView2NavigationStartingEventArgs2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2NavigationStartingEventArgs2 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2NavigationStartingEventArgs2)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

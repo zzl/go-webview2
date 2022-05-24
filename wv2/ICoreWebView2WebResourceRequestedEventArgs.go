@@ -16,6 +16,9 @@ type ICoreWebView2WebResourceRequestedEventArgs struct {
 }
 
 func NewICoreWebView2WebResourceRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2WebResourceRequestedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2WebResourceRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,18 +36,14 @@ func (this *ICoreWebView2WebResourceRequestedEventArgs) IID() *syscall.GUID {
 func (this *ICoreWebView2WebResourceRequestedEventArgs) GetRequest(request **ICoreWebView2WebResourceRequest) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(request)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*request).IUnknown))
-	}
+		com.AddToScope(request)
 	return com.Error(ret)
 }
 
 func (this *ICoreWebView2WebResourceRequestedEventArgs) GetResponse(response **ICoreWebView2WebResourceResponse) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(response)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*response).IUnknown))
-	}
+		com.AddToScope(response)
 	return com.Error(ret)
 }
 
@@ -57,9 +56,7 @@ func (this *ICoreWebView2WebResourceRequestedEventArgs) SetResponse(response *IC
 func (this *ICoreWebView2WebResourceRequestedEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[6]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*deferral).IUnknown))
-	}
+		com.AddToScope(deferral)
 	return com.Error(ret)
 }
 

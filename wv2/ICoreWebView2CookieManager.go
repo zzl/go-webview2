@@ -16,6 +16,9 @@ type ICoreWebView2CookieManager struct {
 }
 
 func NewICoreWebView2CookieManager(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2CookieManager {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2CookieManager)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,18 +36,14 @@ func (this *ICoreWebView2CookieManager) IID() *syscall.GUID {
 func (this *ICoreWebView2CookieManager) CreateCookie(name string, value string, domain string, path string, cookie **ICoreWebView2Cookie) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(name)), uintptr(win32.StrToPointer(value)), uintptr(win32.StrToPointer(domain)), uintptr(win32.StrToPointer(path)), uintptr(unsafe.Pointer(cookie)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*cookie).IUnknown))
-	}
+		com.AddToScope(cookie)
 	return com.Error(ret)
 }
 
 func (this *ICoreWebView2CookieManager) CopyCookie(cookieParam *ICoreWebView2Cookie, cookie **ICoreWebView2Cookie) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(cookieParam)), uintptr(unsafe.Pointer(cookie)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*cookie).IUnknown))
-	}
+		com.AddToScope(cookie)
 	return com.Error(ret)
 }
 

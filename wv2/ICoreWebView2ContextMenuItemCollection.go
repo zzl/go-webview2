@@ -16,6 +16,9 @@ type ICoreWebView2ContextMenuItemCollection struct {
 }
 
 func NewICoreWebView2ContextMenuItemCollection(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ContextMenuItemCollection {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ContextMenuItemCollection)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -39,9 +42,7 @@ func (this *ICoreWebView2ContextMenuItemCollection) GetCount(value *uint32) com.
 func (this *ICoreWebView2ContextMenuItemCollection) GetValueAtIndex(index uint32, value **ICoreWebView2ContextMenuItem) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 

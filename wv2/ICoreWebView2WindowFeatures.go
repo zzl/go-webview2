@@ -16,6 +16,9 @@ type ICoreWebView2WindowFeatures struct {
 }
 
 func NewICoreWebView2WindowFeatures(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2WindowFeatures {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2WindowFeatures)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

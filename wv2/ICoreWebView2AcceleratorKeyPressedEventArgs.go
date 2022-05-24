@@ -16,6 +16,9 @@ type ICoreWebView2AcceleratorKeyPressedEventArgs struct {
 }
 
 func NewICoreWebView2AcceleratorKeyPressedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2AcceleratorKeyPressedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2AcceleratorKeyPressedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

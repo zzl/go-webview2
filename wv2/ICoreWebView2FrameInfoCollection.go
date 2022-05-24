@@ -16,6 +16,9 @@ type ICoreWebView2FrameInfoCollection struct {
 }
 
 func NewICoreWebView2FrameInfoCollection(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2FrameInfoCollection {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2FrameInfoCollection)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ICoreWebView2FrameInfoCollection) IID() *syscall.GUID {
 func (this *ICoreWebView2FrameInfoCollection) GetIterator(iterator **ICoreWebView2FrameInfoCollectionIterator) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(iterator)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*iterator).IUnknown))
-	}
+		com.AddToScope(iterator)
 	return com.Error(ret)
 }
 

@@ -16,6 +16,9 @@ type ICoreWebView2Environment9 struct {
 }
 
 func NewICoreWebView2Environment9(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Environment9 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Environment9)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ICoreWebView2Environment9) IID() *syscall.GUID {
 func (this *ICoreWebView2Environment9) CreateContextMenuItem(label string, iconStream *win32.IStream, kind int32, item **ICoreWebView2ContextMenuItem) com.Error {
 	addr := (*this.LpVtbl)[19]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(label)), uintptr(unsafe.Pointer(iconStream)), uintptr(kind), uintptr(unsafe.Pointer(item)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*item).IUnknown))
-	}
+		com.AddToScope(item)
 	return com.Error(ret)
 }
 

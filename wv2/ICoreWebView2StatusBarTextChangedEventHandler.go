@@ -17,7 +17,7 @@ type ICoreWebView2StatusBarTextChangedEventHandler struct {
 
 type ICoreWebView2StatusBarTextChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2StatusBarTextChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2StatusBarTextChangedEventHandlerImpl) QueryInterface(ri
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2StatusBarTextChangedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2StatusBarTextChangedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2StatusBarTextChangedEventHandlerComObj) impl() ICoreWeb
 	return this.Impl().(ICoreWebView2StatusBarTextChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2StatusBarTextChangedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2StatusBarTextChangedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2StatusBarTextChangedEventHandler(impl ICoreWebView2StatusBa
 //
 type ICoreWebView2StatusBarTextChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2StatusBarTextChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2StatusBarTextChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2StatusBarTextChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2StatusBarTextChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2StatusBarTextChangedEventHandler {
+func NewICoreWebView2StatusBarTextChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2StatusBarTextChangedEventHandler {
 	impl := &ICoreWebView2StatusBarTextChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2StatusBarTextChangedEventHandlerComObj(impl, scoped).ICoreWebView2StatusBarTextChangedEventHandler()
 }

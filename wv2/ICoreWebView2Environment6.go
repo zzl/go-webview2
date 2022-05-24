@@ -16,6 +16,9 @@ type ICoreWebView2Environment6 struct {
 }
 
 func NewICoreWebView2Environment6(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Environment6 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Environment6)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ICoreWebView2Environment6) IID() *syscall.GUID {
 func (this *ICoreWebView2Environment6) CreatePrintSettings(printSettings **ICoreWebView2PrintSettings) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(printSettings)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*printSettings).IUnknown))
-	}
+		com.AddToScope(printSettings)
 	return com.Error(ret)
 }
 

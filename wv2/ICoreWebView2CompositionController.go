@@ -16,6 +16,9 @@ type ICoreWebView2CompositionController struct {
 }
 
 func NewICoreWebView2CompositionController(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2CompositionController {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2CompositionController)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -30,16 +33,14 @@ func (this *ICoreWebView2CompositionController) IID() *syscall.GUID {
 	return &IID_ICoreWebView2CompositionController
 }
 
-func (this *ICoreWebView2CompositionController) GetRootVisualTarget(target **com.UnknownClass) com.Error {
+func (this *ICoreWebView2CompositionController) GetRootVisualTarget(target **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(target)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*target).IUnknown))
-	}
+		com.AddToScope(target)
 	return com.Error(ret)
 }
 
-func (this *ICoreWebView2CompositionController) SetRootVisualTarget(target *com.UnknownClass) com.Error {
+func (this *ICoreWebView2CompositionController) SetRootVisualTarget(target *win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(target)))
 	return com.Error(ret)

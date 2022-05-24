@@ -16,6 +16,9 @@ type ICoreWebView2ContextMenuTarget struct {
 }
 
 func NewICoreWebView2ContextMenuTarget(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ContextMenuTarget {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ContextMenuTarget)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

@@ -16,6 +16,9 @@ type ICoreWebView2Environment2 struct {
 }
 
 func NewICoreWebView2Environment2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Environment2 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Environment2)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ICoreWebView2Environment2) IID() *syscall.GUID {
 func (this *ICoreWebView2Environment2) CreateWebResourceRequest(uri string, method string, postData *win32.IStream, headers string, request **ICoreWebView2WebResourceRequest) com.Error {
 	addr := (*this.LpVtbl)[8]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(uri)), uintptr(win32.StrToPointer(method)), uintptr(unsafe.Pointer(postData)), uintptr(win32.StrToPointer(headers)), uintptr(unsafe.Pointer(request)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*request).IUnknown))
-	}
+		com.AddToScope(request)
 	return com.Error(ret)
 }
 

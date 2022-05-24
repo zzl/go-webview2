@@ -16,6 +16,9 @@ type ICoreWebView2Environment8 struct {
 }
 
 func NewICoreWebView2Environment8(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Environment8 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Environment8)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -45,9 +48,7 @@ func (this *ICoreWebView2Environment8) Remove_ProcessInfosChanged(token EventReg
 func (this *ICoreWebView2Environment8) GetProcessInfos(value **ICoreWebView2ProcessInfoCollection) com.Error {
 	addr := (*this.LpVtbl)[18]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 

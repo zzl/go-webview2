@@ -16,6 +16,9 @@ type ICoreWebView2_13 struct {
 }
 
 func NewICoreWebView2_13(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2_13 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2_13)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ICoreWebView2_13) IID() *syscall.GUID {
 func (this *ICoreWebView2_13) GetProfile(value **ICoreWebView2Profile) com.Error {
 	addr := (*this.LpVtbl)[105]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 

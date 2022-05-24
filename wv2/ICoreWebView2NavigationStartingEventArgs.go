@@ -16,6 +16,9 @@ type ICoreWebView2NavigationStartingEventArgs struct {
 }
 
 func NewICoreWebView2NavigationStartingEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2NavigationStartingEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2NavigationStartingEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -51,9 +54,7 @@ func (this *ICoreWebView2NavigationStartingEventArgs) GetIsRedirected(isRedirect
 func (this *ICoreWebView2NavigationStartingEventArgs) GetRequestHeaders(requestHeaders **ICoreWebView2HttpRequestHeaders) com.Error {
 	addr := (*this.LpVtbl)[6]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(requestHeaders)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*requestHeaders).IUnknown))
-	}
+		com.AddToScope(requestHeaders)
 	return com.Error(ret)
 }
 

@@ -16,6 +16,9 @@ type ICoreWebView2ClientCertificateRequestedEventArgs struct {
 }
 
 func NewICoreWebView2ClientCertificateRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ClientCertificateRequestedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ClientCertificateRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -51,27 +54,21 @@ func (this *ICoreWebView2ClientCertificateRequestedEventArgs) GetIsProxy(value *
 func (this *ICoreWebView2ClientCertificateRequestedEventArgs) GetAllowedCertificateAuthorities(value **ICoreWebView2StringCollection) com.Error {
 	addr := (*this.LpVtbl)[6]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 
 func (this *ICoreWebView2ClientCertificateRequestedEventArgs) GetMutuallyTrustedCertificates(value **ICoreWebView2ClientCertificateCollection) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 
 func (this *ICoreWebView2ClientCertificateRequestedEventArgs) GetSelectedCertificate(value **ICoreWebView2ClientCertificate) com.Error {
 	addr := (*this.LpVtbl)[8]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*value).IUnknown))
-	}
+		com.AddToScope(value)
 	return com.Error(ret)
 }
 
@@ -108,9 +105,7 @@ func (this *ICoreWebView2ClientCertificateRequestedEventArgs) SetHandled(value i
 func (this *ICoreWebView2ClientCertificateRequestedEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*deferral).IUnknown))
-	}
+		com.AddToScope(deferral)
 	return com.Error(ret)
 }
 

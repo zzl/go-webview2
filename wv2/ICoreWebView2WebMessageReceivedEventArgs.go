@@ -16,6 +16,9 @@ type ICoreWebView2WebMessageReceivedEventArgs struct {
 }
 
 func NewICoreWebView2WebMessageReceivedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2WebMessageReceivedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2WebMessageReceivedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

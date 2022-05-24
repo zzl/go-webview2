@@ -16,6 +16,9 @@ type ICoreWebView2Controller4 struct {
 }
 
 func NewICoreWebView2Controller4(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Controller4 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Controller4)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

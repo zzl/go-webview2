@@ -17,7 +17,7 @@ type ICoreWebView2ContainsFullScreenElementChangedEventHandler struct {
 
 type ICoreWebView2ContainsFullScreenElementChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2ContainsFullScreenElementChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2ContainsFullScreenElementChangedEventHandlerImpl) Query
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2ContainsFullScreenElementChangedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2ContainsFullScreenElementChangedEventHandlerImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2ContainsFullScreenElementChangedEventHandlerComObj) imp
 	return this.Impl().(ICoreWebView2ContainsFullScreenElementChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2ContainsFullScreenElementChangedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2ContainsFullScreenElementChangedEventHandlerComObj) Invoke(sender *ICoreWebView2, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2ContainsFullScreenElementChangedEventHandler(impl ICoreWebV
 //
 type ICoreWebView2ContainsFullScreenElementChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2ContainsFullScreenElementChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2ContainsFullScreenElementChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2ContainsFullScreenElementChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2ContainsFullScreenElementChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2ContainsFullScreenElementChangedEventHandler {
+func NewICoreWebView2ContainsFullScreenElementChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2ContainsFullScreenElementChangedEventHandler {
 	impl := &ICoreWebView2ContainsFullScreenElementChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2ContainsFullScreenElementChangedEventHandlerComObj(impl, scoped).ICoreWebView2ContainsFullScreenElementChangedEventHandler()
 }

@@ -16,6 +16,9 @@ type ICoreWebView2BasicAuthenticationResponse struct {
 }
 
 func NewICoreWebView2BasicAuthenticationResponse(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2BasicAuthenticationResponse {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2BasicAuthenticationResponse)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

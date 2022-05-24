@@ -16,6 +16,9 @@ type ICoreWebView2ProcessInfoCollection struct {
 }
 
 func NewICoreWebView2ProcessInfoCollection(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ProcessInfoCollection {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ProcessInfoCollection)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -39,9 +42,7 @@ func (this *ICoreWebView2ProcessInfoCollection) GetCount(count *uint32) com.Erro
 func (this *ICoreWebView2ProcessInfoCollection) GetValueAtIndex(index uint32, processInfo **ICoreWebView2ProcessInfo) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(processInfo)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*processInfo).IUnknown))
-	}
+		com.AddToScope(processInfo)
 	return com.Error(ret)
 }
 

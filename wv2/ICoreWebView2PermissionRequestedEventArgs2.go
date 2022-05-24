@@ -16,6 +16,9 @@ type ICoreWebView2PermissionRequestedEventArgs2 struct {
 }
 
 func NewICoreWebView2PermissionRequestedEventArgs2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2PermissionRequestedEventArgs2 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2PermissionRequestedEventArgs2)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

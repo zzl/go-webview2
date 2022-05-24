@@ -16,6 +16,9 @@ type ICoreWebView2StringCollection struct {
 }
 
 func NewICoreWebView2StringCollection(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2StringCollection {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2StringCollection)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

@@ -16,6 +16,9 @@ type ICoreWebView2ProcessFailedEventArgs2 struct {
 }
 
 func NewICoreWebView2ProcessFailedEventArgs2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ProcessFailedEventArgs2 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ProcessFailedEventArgs2)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -51,9 +54,7 @@ func (this *ICoreWebView2ProcessFailedEventArgs2) GetProcessDescription(processD
 func (this *ICoreWebView2ProcessFailedEventArgs2) GetFrameInfosForFailedProcess(frames **ICoreWebView2FrameInfoCollection) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(frames)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*frames).IUnknown))
-	}
+		com.AddToScope(frames)
 	return com.Error(ret)
 }
 

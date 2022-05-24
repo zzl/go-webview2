@@ -16,6 +16,9 @@ type ICoreWebView2ProcessFailedEventArgs struct {
 }
 
 func NewICoreWebView2ProcessFailedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ProcessFailedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ProcessFailedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

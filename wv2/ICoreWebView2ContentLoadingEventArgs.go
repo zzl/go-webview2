@@ -16,6 +16,9 @@ type ICoreWebView2ContentLoadingEventArgs struct {
 }
 
 func NewICoreWebView2ContentLoadingEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ContentLoadingEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ContentLoadingEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

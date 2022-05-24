@@ -16,6 +16,9 @@ type ICoreWebView2DownloadStartingEventArgs struct {
 }
 
 func NewICoreWebView2DownloadStartingEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2DownloadStartingEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2DownloadStartingEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ICoreWebView2DownloadStartingEventArgs) IID() *syscall.GUID {
 func (this *ICoreWebView2DownloadStartingEventArgs) GetDownloadOperation(downloadOperation **ICoreWebView2DownloadOperation) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(downloadOperation)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*downloadOperation).IUnknown))
-	}
+		com.AddToScope(downloadOperation)
 	return com.Error(ret)
 }
 
@@ -78,9 +79,7 @@ func (this *ICoreWebView2DownloadStartingEventArgs) SetHandled(handled int32) co
 func (this *ICoreWebView2DownloadStartingEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*deferral).IUnknown))
-	}
+		com.AddToScope(deferral)
 	return com.Error(ret)
 }
 

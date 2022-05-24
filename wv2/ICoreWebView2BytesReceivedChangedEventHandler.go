@@ -17,7 +17,7 @@ type ICoreWebView2BytesReceivedChangedEventHandler struct {
 
 type ICoreWebView2BytesReceivedChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2BytesReceivedChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2BytesReceivedChangedEventHandlerImpl) QueryInterface(ri
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2BytesReceivedChangedEventHandlerImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2BytesReceivedChangedEventHandlerImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2BytesReceivedChangedEventHandlerComObj) impl() ICoreWeb
 	return this.Impl().(ICoreWebView2BytesReceivedChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2BytesReceivedChangedEventHandlerComObj) Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2BytesReceivedChangedEventHandlerComObj) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2BytesReceivedChangedEventHandler(impl ICoreWebView2BytesRec
 //
 type ICoreWebView2BytesReceivedChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2BytesReceivedChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2BytesReceivedChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2BytesReceivedChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2BytesReceivedChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2BytesReceivedChangedEventHandler {
+func NewICoreWebView2BytesReceivedChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2BytesReceivedChangedEventHandler {
 	impl := &ICoreWebView2BytesReceivedChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2BytesReceivedChangedEventHandlerComObj(impl, scoped).ICoreWebView2BytesReceivedChangedEventHandler()
 }

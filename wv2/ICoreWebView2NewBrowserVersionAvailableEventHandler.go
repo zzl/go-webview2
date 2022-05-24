@@ -17,7 +17,7 @@ type ICoreWebView2NewBrowserVersionAvailableEventHandler struct {
 
 type ICoreWebView2NewBrowserVersionAvailableEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2Environment, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2NewBrowserVersionAvailableEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerImpl) QueryInterf
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerImpl) Invoke(sender *ICoreWebView2Environment, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerImpl) Invoke(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerComObj) impl() IC
 	return this.Impl().(ICoreWebView2NewBrowserVersionAvailableEventHandlerInterface)
 }
 
-func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerComObj) Invoke(sender *ICoreWebView2Environment, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerComObj) Invoke(sender *ICoreWebView2Environment, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2NewBrowserVersionAvailableEventHandler(impl ICoreWebView2Ne
 //
 type ICoreWebView2NewBrowserVersionAvailableEventHandlerByFuncImpl struct {
 	ICoreWebView2NewBrowserVersionAvailableEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Environment, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Environment, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2NewBrowserVersionAvailableEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Environment, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2NewBrowserVersionAvailableEventHandler {
+func NewICoreWebView2NewBrowserVersionAvailableEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2NewBrowserVersionAvailableEventHandler {
 	impl := &ICoreWebView2NewBrowserVersionAvailableEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2NewBrowserVersionAvailableEventHandlerComObj(impl, scoped).ICoreWebView2NewBrowserVersionAvailableEventHandler()
 }

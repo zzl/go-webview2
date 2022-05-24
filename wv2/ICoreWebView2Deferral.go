@@ -16,6 +16,9 @@ type ICoreWebView2Deferral struct {
 }
 
 func NewICoreWebView2Deferral(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Deferral {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Deferral)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

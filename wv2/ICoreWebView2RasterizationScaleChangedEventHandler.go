@@ -17,7 +17,7 @@ type ICoreWebView2RasterizationScaleChangedEventHandler struct {
 
 type ICoreWebView2RasterizationScaleChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2RasterizationScaleChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2RasterizationScaleChangedEventHandlerImpl) QueryInterfa
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2RasterizationScaleChangedEventHandlerImpl) Invoke(sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2RasterizationScaleChangedEventHandlerImpl) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2RasterizationScaleChangedEventHandlerComObj) impl() ICo
 	return this.Impl().(ICoreWebView2RasterizationScaleChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2RasterizationScaleChangedEventHandlerComObj) Invoke(sender *ICoreWebView2Controller, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2RasterizationScaleChangedEventHandlerComObj) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2RasterizationScaleChangedEventHandler(impl ICoreWebView2Ras
 //
 type ICoreWebView2RasterizationScaleChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2RasterizationScaleChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2RasterizationScaleChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2RasterizationScaleChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2RasterizationScaleChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Controller, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2RasterizationScaleChangedEventHandler {
+func NewICoreWebView2RasterizationScaleChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2RasterizationScaleChangedEventHandler {
 	impl := &ICoreWebView2RasterizationScaleChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2RasterizationScaleChangedEventHandlerComObj(impl, scoped).ICoreWebView2RasterizationScaleChangedEventHandler()
 }

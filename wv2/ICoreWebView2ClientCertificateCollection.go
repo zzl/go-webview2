@@ -16,6 +16,9 @@ type ICoreWebView2ClientCertificateCollection struct {
 }
 
 func NewICoreWebView2ClientCertificateCollection(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ClientCertificateCollection {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2ClientCertificateCollection)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -39,9 +42,7 @@ func (this *ICoreWebView2ClientCertificateCollection) GetCount(value *uint32) co
 func (this *ICoreWebView2ClientCertificateCollection) GetValueAtIndex(index uint32, certificate **ICoreWebView2ClientCertificate) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(certificate)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*certificate).IUnknown))
-	}
+		com.AddToScope(certificate)
 	return com.Error(ret)
 }
 

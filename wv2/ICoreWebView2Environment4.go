@@ -16,6 +16,9 @@ type ICoreWebView2Environment4 struct {
 }
 
 func NewICoreWebView2Environment4(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Environment4 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2Environment4)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -30,12 +33,10 @@ func (this *ICoreWebView2Environment4) IID() *syscall.GUID {
 	return &IID_ICoreWebView2Environment4
 }
 
-func (this *ICoreWebView2Environment4) GetAutomationProviderForWindow(hwnd win32.HWND, provider **com.UnknownClass) com.Error {
+func (this *ICoreWebView2Environment4) GetAutomationProviderForWindow(hwnd win32.HWND, provider **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(hwnd), uintptr(unsafe.Pointer(provider)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*provider).IUnknown))
-	}
+		com.AddToScope(provider)
 	return com.Error(ret)
 }
 

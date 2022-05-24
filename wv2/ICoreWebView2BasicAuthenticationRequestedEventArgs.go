@@ -16,6 +16,9 @@ type ICoreWebView2BasicAuthenticationRequestedEventArgs struct {
 }
 
 func NewICoreWebView2BasicAuthenticationRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2BasicAuthenticationRequestedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2BasicAuthenticationRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -45,9 +48,7 @@ func (this *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetChallenge(cha
 func (this *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetResponse(response **ICoreWebView2BasicAuthenticationResponse) com.Error {
 	addr := (*this.LpVtbl)[5]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(response)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*response).IUnknown))
-	}
+		com.AddToScope(response)
 	return com.Error(ret)
 }
 
@@ -66,9 +67,7 @@ func (this *ICoreWebView2BasicAuthenticationRequestedEventArgs) SetCancel(cancel
 func (this *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[8]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*deferral).IUnknown))
-	}
+		com.AddToScope(deferral)
 	return com.Error(ret)
 }
 

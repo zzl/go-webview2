@@ -16,6 +16,9 @@ type ICoreWebView2SourceChangedEventArgs struct {
 }
 
 func NewICoreWebView2SourceChangedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2SourceChangedEventArgs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2SourceChangedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

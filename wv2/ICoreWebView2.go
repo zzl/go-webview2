@@ -17,6 +17,9 @@ type ICoreWebView2 struct {
 }
 
 func NewICoreWebView2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2 {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICoreWebView2)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ICoreWebView2) IID() *syscall.GUID {
 func (this *ICoreWebView2) GetSettings(settings **ICoreWebView2Settings) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(settings)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*settings).IUnknown))
-	}
+		com.AddToScope(settings)
 	return com.Error(ret)
 }
 
@@ -271,9 +272,7 @@ func (this *ICoreWebView2) GoForward() com.Error {
 func (this *ICoreWebView2) GetDevToolsProtocolEventReceiver(eventName string, receiver **ICoreWebView2DevToolsProtocolEventReceiver) com.Error {
 	addr := (*this.LpVtbl)[42]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(eventName)), uintptr(unsafe.Pointer(receiver)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*receiver).IUnknown))
-	}
+		com.AddToScope(receiver)
 	return com.Error(ret)
 }
 

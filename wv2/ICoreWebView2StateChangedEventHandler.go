@@ -17,7 +17,7 @@ type ICoreWebView2StateChangedEventHandler struct {
 
 type ICoreWebView2StateChangedEventHandlerInterface interface {
 	win32.IUnknownInterface
-	Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error
+	Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
 }
 
 type ICoreWebView2StateChangedEventHandlerImpl struct {
@@ -38,7 +38,7 @@ func (this *ICoreWebView2StateChangedEventHandlerImpl) QueryInterface(riid *sysc
 	return this.IUnknownImpl.QueryInterface(riid, ppvObject)
 }
 
-func (this *ICoreWebView2StateChangedEventHandlerImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error {
+func (this *ICoreWebView2StateChangedEventHandlerImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error {
 	var ret com.Error
 	return ret
 }
@@ -55,7 +55,7 @@ func (this *ICoreWebView2StateChangedEventHandlerComObj) impl() ICoreWebView2Sta
 	return this.Impl().(ICoreWebView2StateChangedEventHandlerInterface)
 }
 
-func (this *ICoreWebView2StateChangedEventHandlerComObj) Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) uintptr {
+func (this *ICoreWebView2StateChangedEventHandlerComObj) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) uintptr {
 	return (uintptr)(this.impl().Invoke(sender, args))
 }
 
@@ -98,13 +98,13 @@ func NewICoreWebView2StateChangedEventHandler(impl ICoreWebView2StateChangedEven
 //
 type ICoreWebView2StateChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2StateChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error
+	handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2StateChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error{
+func (this *ICoreWebView2StateChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error{
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2StateChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2DownloadOperation, args *com.UnknownClass) com.Error, scoped bool) *ICoreWebView2StateChangedEventHandler {
+func NewICoreWebView2StateChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2StateChangedEventHandler {
 	impl := &ICoreWebView2StateChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2StateChangedEventHandlerComObj(impl, scoped).ICoreWebView2StateChangedEventHandler()
 }
