@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 377F3721-C74E-48CA-8DB1-DF68E51D60E2
-var IID_ICoreWebView2PrintSettings = syscall.GUID{0x377F3721, 0xC74E, 0x48CA, 
+var IID_ICoreWebView2PrintSettings = syscall.GUID{0x377F3721, 0xC74E, 0x48CA,
 	[8]byte{0x8D, 0xB1, 0xDF, 0x68, 0xE5, 0x1D, 0x60, 0xE2}}
 
 type ICoreWebView2PrintSettings struct {
@@ -16,8 +16,8 @@ type ICoreWebView2PrintSettings struct {
 }
 
 func NewICoreWebView2PrintSettings(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2PrintSettings {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2PrintSettings)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -188,4 +188,3 @@ func (this *ICoreWebView2PrintSettings) SetFooterUri(footerUri string) com.Error
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(footerUri)))
 	return com.Error(ret)
 }
-

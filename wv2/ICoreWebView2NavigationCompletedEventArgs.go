@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 30D68B7D-20D9-4752-A9CA-EC8448FBB5C1
-var IID_ICoreWebView2NavigationCompletedEventArgs = syscall.GUID{0x30D68B7D, 0x20D9, 0x4752, 
+var IID_ICoreWebView2NavigationCompletedEventArgs = syscall.GUID{0x30D68B7D, 0x20D9, 0x4752,
 	[8]byte{0xA9, 0xCA, 0xEC, 0x84, 0x48, 0xFB, 0xB5, 0xC1}}
 
 type ICoreWebView2NavigationCompletedEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2NavigationCompletedEventArgs struct {
 }
 
 func NewICoreWebView2NavigationCompletedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2NavigationCompletedEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2NavigationCompletedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {

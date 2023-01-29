@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // FDB5AB74-AF33-4854-84F0-0A631DEB5EBA
-var IID_ICoreWebView2Settings3 = syscall.GUID{0xFDB5AB74, 0xAF33, 0x4854, 
+var IID_ICoreWebView2Settings3 = syscall.GUID{0xFDB5AB74, 0xAF33, 0x4854,
 	[8]byte{0x84, 0xF0, 0x0A, 0x63, 0x1D, 0xEB, 0x5E, 0xBA}}
 
 type ICoreWebView2Settings3 struct {
@@ -16,8 +16,8 @@ type ICoreWebView2Settings3 struct {
 }
 
 func NewICoreWebView2Settings3(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Settings3 {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2Settings3)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -44,4 +44,3 @@ func (this *ICoreWebView2Settings3) SetAreBrowserAcceleratorKeysEnabled(areBrows
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(areBrowserAcceleratorKeysEnabled))
 	return com.Error(ret)
 }
-

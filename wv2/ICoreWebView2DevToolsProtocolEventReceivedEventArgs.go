@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 653C2959-BB3A-4377-8632-B58ADA4E66C4
-var IID_ICoreWebView2DevToolsProtocolEventReceivedEventArgs = syscall.GUID{0x653C2959, 0xBB3A, 0x4377, 
+var IID_ICoreWebView2DevToolsProtocolEventReceivedEventArgs = syscall.GUID{0x653C2959, 0xBB3A, 0x4377,
 	[8]byte{0x86, 0x32, 0xB5, 0x8A, 0xDA, 0x4E, 0x66, 0xC4}}
 
 type ICoreWebView2DevToolsProtocolEventReceivedEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2DevToolsProtocolEventReceivedEventArgs struct {
 }
 
 func NewICoreWebView2DevToolsProtocolEventReceivedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2DevToolsProtocolEventReceivedEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2DevToolsProtocolEventReceivedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {

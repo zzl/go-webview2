@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // B32CA51A-8371-45E9-9317-AF021D080367
-var IID_ICoreWebView2DevToolsProtocolEventReceiver = syscall.GUID{0xB32CA51A, 0x8371, 0x45E9, 
+var IID_ICoreWebView2DevToolsProtocolEventReceiver = syscall.GUID{0xB32CA51A, 0x8371, 0x45E9,
 	[8]byte{0x93, 0x17, 0xAF, 0x02, 0x1D, 0x08, 0x03, 0x67}}
 
 type ICoreWebView2DevToolsProtocolEventReceiver struct {
@@ -16,8 +16,8 @@ type ICoreWebView2DevToolsProtocolEventReceiver struct {
 }
 
 func NewICoreWebView2DevToolsProtocolEventReceiver(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2DevToolsProtocolEventReceiver {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2DevToolsProtocolEventReceiver)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -44,4 +44,3 @@ func (this *ICoreWebView2DevToolsProtocolEventReceiver) Remove_DevToolsProtocolE
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), *(*uintptr)(unsafe.Pointer(&token)))
 	return com.Error(ret)
 }
-

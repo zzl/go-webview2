@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 3C067F9F-5388-4772-8B48-79F7EF1AB37C
-var IID_ICoreWebView2SourceChangedEventHandler = syscall.GUID{0x3C067F9F, 0x5388, 0x4772, 
+var IID_ICoreWebView2SourceChangedEventHandler = syscall.GUID{0x3C067F9F, 0x5388, 0x4772,
 	[8]byte{0x8B, 0x48, 0x79, 0xF7, 0xEF, 0x1A, 0xB3, 0x7C}}
 
 type ICoreWebView2SourceChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2SourceChangedEventHandlerImpl) Invoke(sender *ICoreWebV
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2SourceChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2SourceChangedEventHandlerComObj) BuildVtbl(lock bool) *
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2SourceChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2SourceChangedEventHandlerVtbl
 	}
 	_pICoreWebView2SourceChangedEventHandlerVtbl = &ICoreWebView2SourceChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2SourceChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2SourceChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2SourceChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2SourceChangedEventHandlerComObj) ICoreWebView2SourceChangedEventHandler() *ICoreWebView2SourceChangedEventHandler{
+func (this *ICoreWebView2SourceChangedEventHandlerComObj) ICoreWebView2SourceChangedEventHandler() *ICoreWebView2SourceChangedEventHandler {
 	return (*ICoreWebView2SourceChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2SourceChangedEventHandlerComObj(impl ICoreWebView2SourceCha
 }
 
 func NewICoreWebView2SourceChangedEventHandler(impl ICoreWebView2SourceChangedEventHandlerInterface) *ICoreWebView2SourceChangedEventHandler {
-	return NewICoreWebView2SourceChangedEventHandlerComObj(impl, true).ICoreWebView2SourceChangedEventHandler()}
+	return NewICoreWebView2SourceChangedEventHandlerComObj(impl, true).ICoreWebView2SourceChangedEventHandler()
+}
 
 //
 type ICoreWebView2SourceChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2SourceChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) com.Error
 }
-func (this *ICoreWebView2SourceChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) com.Error{
+
+func (this *ICoreWebView2SourceChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2SourceChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) com.Error, scoped bool) *ICoreWebView2SourceChangedEventHandler {
+func NewICoreWebView2SourceChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) com.Error, scoped bool) *ICoreWebView2SourceChangedEventHandler {
 	impl := &ICoreWebView2SourceChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2SourceChangedEventHandlerComObj(impl, scoped).ICoreWebView2SourceChangedEventHandler()
 }

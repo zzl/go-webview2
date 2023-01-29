@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 84FA7612-3F3D-4FBF-889D-FAD000492D72
-var IID_ICoreWebView2ProcessInfo = syscall.GUID{0x84FA7612, 0x3F3D, 0x4FBF, 
+var IID_ICoreWebView2ProcessInfo = syscall.GUID{0x84FA7612, 0x3F3D, 0x4FBF,
 	[8]byte{0x88, 0x9D, 0xFA, 0xD0, 0x00, 0x49, 0x2D, 0x72}}
 
 type ICoreWebView2ProcessInfo struct {
@@ -16,8 +16,8 @@ type ICoreWebView2ProcessInfo struct {
 }
 
 func NewICoreWebView2ProcessInfo(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ProcessInfo {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2ProcessInfo)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -44,4 +44,3 @@ func (this *ICoreWebView2ProcessInfo) GetKind(kind *int32) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(kind)))
 	return com.Error(ret)
 }
-

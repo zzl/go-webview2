@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // B29C7E28-FA79-41A8-8E44-65811C76DCB2
-var IID_ICoreWebView2AcceleratorKeyPressedEventHandler = syscall.GUID{0xB29C7E28, 0xFA79, 0x41A8, 
+var IID_ICoreWebView2AcceleratorKeyPressedEventHandler = syscall.GUID{0xB29C7E28, 0xFA79, 0x41A8,
 	[8]byte{0x8E, 0x44, 0x65, 0x81, 0x1C, 0x76, 0xDC, 0xB2}}
 
 type ICoreWebView2AcceleratorKeyPressedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2AcceleratorKeyPressedEventHandlerImpl) Invoke(sender *I
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2AcceleratorKeyPressedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2AcceleratorKeyPressedEventHandlerComObj) BuildVtbl(lock
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2AcceleratorKeyPressedEventHandlerVtbl != nil {
 		return _pICoreWebView2AcceleratorKeyPressedEventHandlerVtbl
 	}
 	_pICoreWebView2AcceleratorKeyPressedEventHandlerVtbl = &ICoreWebView2AcceleratorKeyPressedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2AcceleratorKeyPressedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2AcceleratorKeyPressedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2AcceleratorKeyPressedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2AcceleratorKeyPressedEventHandlerComObj) ICoreWebView2AcceleratorKeyPressedEventHandler() *ICoreWebView2AcceleratorKeyPressedEventHandler{
+func (this *ICoreWebView2AcceleratorKeyPressedEventHandlerComObj) ICoreWebView2AcceleratorKeyPressedEventHandler() *ICoreWebView2AcceleratorKeyPressedEventHandler {
 	return (*ICoreWebView2AcceleratorKeyPressedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2AcceleratorKeyPressedEventHandlerComObj(impl ICoreWebView2A
 }
 
 func NewICoreWebView2AcceleratorKeyPressedEventHandler(impl ICoreWebView2AcceleratorKeyPressedEventHandlerInterface) *ICoreWebView2AcceleratorKeyPressedEventHandler {
-	return NewICoreWebView2AcceleratorKeyPressedEventHandlerComObj(impl, true).ICoreWebView2AcceleratorKeyPressedEventHandler()}
+	return NewICoreWebView2AcceleratorKeyPressedEventHandlerComObj(impl, true).ICoreWebView2AcceleratorKeyPressedEventHandler()
+}
 
 //
 type ICoreWebView2AcceleratorKeyPressedEventHandlerByFuncImpl struct {
 	ICoreWebView2AcceleratorKeyPressedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) com.Error
 }
-func (this *ICoreWebView2AcceleratorKeyPressedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) com.Error{
+
+func (this *ICoreWebView2AcceleratorKeyPressedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2AcceleratorKeyPressedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) com.Error, scoped bool) *ICoreWebView2AcceleratorKeyPressedEventHandler {
+func NewICoreWebView2AcceleratorKeyPressedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) com.Error, scoped bool) *ICoreWebView2AcceleratorKeyPressedEventHandler {
 	impl := &ICoreWebView2AcceleratorKeyPressedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2AcceleratorKeyPressedEventHandlerComObj(impl, scoped).ICoreWebView2AcceleratorKeyPressedEventHandler()
 }

@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // F9614724-5D2B-41DC-AEF7-73D62B51543B
-var IID_ICoreWebView2Controller3 = syscall.GUID{0xF9614724, 0x5D2B, 0x41DC, 
+var IID_ICoreWebView2Controller3 = syscall.GUID{0xF9614724, 0x5D2B, 0x41DC,
 	[8]byte{0xAE, 0xF7, 0x73, 0xD6, 0x2B, 0x51, 0x54, 0x3B}}
 
 type ICoreWebView2Controller3 struct {
@@ -16,8 +16,8 @@ type ICoreWebView2Controller3 struct {
 }
 
 func NewICoreWebView2Controller3(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Controller3 {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2Controller3)(unsafe.Pointer(pUnk))
 	if addRef {

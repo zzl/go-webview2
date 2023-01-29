@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // FA504257-A216-4911-A860-FE8825712861
-var IID_ICoreWebView2BrowserProcessExitedEventHandler = syscall.GUID{0xFA504257, 0xA216, 0x4911, 
+var IID_ICoreWebView2BrowserProcessExitedEventHandler = syscall.GUID{0xFA504257, 0xA216, 0x4911,
 	[8]byte{0xA8, 0x60, 0xFE, 0x88, 0x25, 0x71, 0x28, 0x61}}
 
 type ICoreWebView2BrowserProcessExitedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2BrowserProcessExitedEventHandlerImpl) Invoke(sender *IC
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2BrowserProcessExitedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2BrowserProcessExitedEventHandlerComObj) BuildVtbl(lock 
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2BrowserProcessExitedEventHandlerVtbl != nil {
 		return _pICoreWebView2BrowserProcessExitedEventHandlerVtbl
 	}
 	_pICoreWebView2BrowserProcessExitedEventHandlerVtbl = &ICoreWebView2BrowserProcessExitedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2BrowserProcessExitedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2BrowserProcessExitedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2BrowserProcessExitedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2BrowserProcessExitedEventHandlerComObj) ICoreWebView2BrowserProcessExitedEventHandler() *ICoreWebView2BrowserProcessExitedEventHandler{
+func (this *ICoreWebView2BrowserProcessExitedEventHandlerComObj) ICoreWebView2BrowserProcessExitedEventHandler() *ICoreWebView2BrowserProcessExitedEventHandler {
 	return (*ICoreWebView2BrowserProcessExitedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2BrowserProcessExitedEventHandlerComObj(impl ICoreWebView2Br
 }
 
 func NewICoreWebView2BrowserProcessExitedEventHandler(impl ICoreWebView2BrowserProcessExitedEventHandlerInterface) *ICoreWebView2BrowserProcessExitedEventHandler {
-	return NewICoreWebView2BrowserProcessExitedEventHandlerComObj(impl, true).ICoreWebView2BrowserProcessExitedEventHandler()}
+	return NewICoreWebView2BrowserProcessExitedEventHandlerComObj(impl, true).ICoreWebView2BrowserProcessExitedEventHandler()
+}
 
 //
 type ICoreWebView2BrowserProcessExitedEventHandlerByFuncImpl struct {
 	ICoreWebView2BrowserProcessExitedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) com.Error
 }
-func (this *ICoreWebView2BrowserProcessExitedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) com.Error{
+
+func (this *ICoreWebView2BrowserProcessExitedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2BrowserProcessExitedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) com.Error, scoped bool) *ICoreWebView2BrowserProcessExitedEventHandler {
+func NewICoreWebView2BrowserProcessExitedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) com.Error, scoped bool) *ICoreWebView2BrowserProcessExitedEventHandler {
 	impl := &ICoreWebView2BrowserProcessExitedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2BrowserProcessExitedEventHandlerComObj(impl, scoped).ICoreWebView2BrowserProcessExitedEventHandler()
 }

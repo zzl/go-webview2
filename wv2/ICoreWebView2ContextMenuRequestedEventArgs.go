@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // A1D309EE-C03F-11EB-8529-0242AC130003
-var IID_ICoreWebView2ContextMenuRequestedEventArgs = syscall.GUID{0xA1D309EE, 0xC03F, 0x11EB, 
+var IID_ICoreWebView2ContextMenuRequestedEventArgs = syscall.GUID{0xA1D309EE, 0xC03F, 0x11EB,
 	[8]byte{0x85, 0x29, 0x02, 0x42, 0xAC, 0x13, 0x00, 0x03}}
 
 type ICoreWebView2ContextMenuRequestedEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2ContextMenuRequestedEventArgs struct {
 }
 
 func NewICoreWebView2ContextMenuRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ContextMenuRequestedEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2ContextMenuRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,14 +36,14 @@ func (this *ICoreWebView2ContextMenuRequestedEventArgs) IID() *syscall.GUID {
 func (this *ICoreWebView2ContextMenuRequestedEventArgs) GetMenuItems(value **ICoreWebView2ContextMenuItemCollection) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-		com.AddToScope(value)
+	com.AddToScope(value)
 	return com.Error(ret)
 }
 
 func (this *ICoreWebView2ContextMenuRequestedEventArgs) GetContextMenuTarget(value **ICoreWebView2ContextMenuTarget) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
-		com.AddToScope(value)
+	com.AddToScope(value)
 	return com.Error(ret)
 }
 
@@ -80,7 +80,6 @@ func (this *ICoreWebView2ContextMenuRequestedEventArgs) GetHandled(value *int32)
 func (this *ICoreWebView2ContextMenuRequestedEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-		com.AddToScope(deferral)
+	com.AddToScope(deferral)
 	return com.Error(ret)
 }
-

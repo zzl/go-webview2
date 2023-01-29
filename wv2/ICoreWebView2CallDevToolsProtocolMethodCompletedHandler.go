@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 5C4889F0-5EF6-4C5A-952C-D8F1B92D0574
-var IID_ICoreWebView2CallDevToolsProtocolMethodCompletedHandler = syscall.GUID{0x5C4889F0, 0x5EF6, 0x4C5A, 
+var IID_ICoreWebView2CallDevToolsProtocolMethodCompletedHandler = syscall.GUID{0x5C4889F0, 0x5EF6, 0x4C5A,
 	[8]byte{0x95, 0x2C, 0xD8, 0xF1, 0xB9, 0x2D, 0x05, 0x74}}
 
 type ICoreWebView2CallDevToolsProtocolMethodCompletedHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerImpl) Invoke(
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerComObj) Build
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2CallDevToolsProtocolMethodCompletedHandlerVtbl != nil {
 		return _pICoreWebView2CallDevToolsProtocolMethodCompletedHandlerVtbl
 	}
 	_pICoreWebView2CallDevToolsProtocolMethodCompletedHandlerVtbl = &ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2CallDevToolsProtocolMethodCompletedHandlerVtbl
 }
 
-func (this *ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerComObj) ICoreWebView2CallDevToolsProtocolMethodCompletedHandler() *ICoreWebView2CallDevToolsProtocolMethodCompletedHandler{
+func (this *ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerComObj) ICoreWebView2CallDevToolsProtocolMethodCompletedHandler() *ICoreWebView2CallDevToolsProtocolMethodCompletedHandler {
 	return (*ICoreWebView2CallDevToolsProtocolMethodCompletedHandler)(unsafe.Pointer(this))
 }
 
@@ -93,19 +94,19 @@ func NewICoreWebView2CallDevToolsProtocolMethodCompletedHandlerComObj(impl ICore
 }
 
 func NewICoreWebView2CallDevToolsProtocolMethodCompletedHandler(impl ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerInterface) *ICoreWebView2CallDevToolsProtocolMethodCompletedHandler {
-	return NewICoreWebView2CallDevToolsProtocolMethodCompletedHandlerComObj(impl, true).ICoreWebView2CallDevToolsProtocolMethodCompletedHandler()}
+	return NewICoreWebView2CallDevToolsProtocolMethodCompletedHandlerComObj(impl, true).ICoreWebView2CallDevToolsProtocolMethodCompletedHandler()
+}
 
-//
 type ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerByFuncImpl struct {
 	ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerImpl
-	handlerFunc func (errorCode com.Error, returnObjectAsJson string) com.Error
+	handlerFunc func(errorCode com.Error, returnObjectAsJson string) com.Error
 }
-func (this *ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, returnObjectAsJson string) com.Error{
+
+func (this *ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, returnObjectAsJson string) com.Error {
 	return this.handlerFunc(errorCode, returnObjectAsJson)
 }
 
-func NewICoreWebView2CallDevToolsProtocolMethodCompletedHandlerByFunc(handlerFunc func (errorCode com.Error, returnObjectAsJson string) com.Error, scoped bool) *ICoreWebView2CallDevToolsProtocolMethodCompletedHandler {
+func NewICoreWebView2CallDevToolsProtocolMethodCompletedHandlerByFunc(handlerFunc func(errorCode com.Error, returnObjectAsJson string) com.Error, scoped bool) *ICoreWebView2CallDevToolsProtocolMethodCompletedHandler {
 	impl := &ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2CallDevToolsProtocolMethodCompletedHandlerComObj(impl, scoped).ICoreWebView2CallDevToolsProtocolMethodCompletedHandler()
 }
-

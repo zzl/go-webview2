@@ -1,7 +1,7 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 76ECEACB-0462-4D94-AC83-423A6793775E
-var IID_ICoreWebView2 = syscall.GUID{0x76ECEACB, 0x0462, 0x4D94, 
+var IID_ICoreWebView2 = syscall.GUID{0x76ECEACB, 0x0462, 0x4D94,
 	[8]byte{0xAC, 0x83, 0x42, 0x3A, 0x67, 0x93, 0x77, 0x5E}}
 
 type ICoreWebView2 struct {
@@ -17,8 +17,8 @@ type ICoreWebView2 struct {
 }
 
 func NewICoreWebView2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2 {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *ICoreWebView2) IID() *syscall.GUID {
 func (this *ICoreWebView2) GetSettings(settings **ICoreWebView2Settings) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(settings)))
-		com.AddToScope(settings)
+	com.AddToScope(settings)
 	return com.Error(ret)
 }
 
@@ -272,7 +272,7 @@ func (this *ICoreWebView2) GoForward() com.Error {
 func (this *ICoreWebView2) GetDevToolsProtocolEventReceiver(eventName string, receiver **ICoreWebView2DevToolsProtocolEventReceiver) com.Error {
 	addr := (*this.LpVtbl)[42]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(eventName)), uintptr(unsafe.Pointer(receiver)))
-		com.AddToScope(receiver)
+	com.AddToScope(receiver)
 	return com.Error(ret)
 }
 

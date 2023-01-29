@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 5DEF109A-2F4B-49FA-B7F6-11C39E513328
-var IID_ICoreWebView2IsDocumentPlayingAudioChangedEventHandler = syscall.GUID{0x5DEF109A, 0x2F4B, 0x49FA, 
+var IID_ICoreWebView2IsDocumentPlayingAudioChangedEventHandler = syscall.GUID{0x5DEF109A, 0x2F4B, 0x49FA,
 	[8]byte{0xB7, 0xF6, 0x11, 0xC3, 0x9E, 0x51, 0x33, 0x28}}
 
 type ICoreWebView2IsDocumentPlayingAudioChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerImpl) Invoke(s
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj) BuildV
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2IsDocumentPlayingAudioChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2IsDocumentPlayingAudioChangedEventHandlerVtbl
 	}
 	_pICoreWebView2IsDocumentPlayingAudioChangedEventHandlerVtbl = &ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2IsDocumentPlayingAudioChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj) ICoreWebView2IsDocumentPlayingAudioChangedEventHandler() *ICoreWebView2IsDocumentPlayingAudioChangedEventHandler{
+func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj) ICoreWebView2IsDocumentPlayingAudioChangedEventHandler() *ICoreWebView2IsDocumentPlayingAudioChangedEventHandler {
 	return (*ICoreWebView2IsDocumentPlayingAudioChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj(impl ICoreW
 }
 
 func NewICoreWebView2IsDocumentPlayingAudioChangedEventHandler(impl ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerInterface) *ICoreWebView2IsDocumentPlayingAudioChangedEventHandler {
-	return NewICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj(impl, true).ICoreWebView2IsDocumentPlayingAudioChangedEventHandler()}
+	return NewICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj(impl, true).ICoreWebView2IsDocumentPlayingAudioChangedEventHandler()
+}
 
 //
 type ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2IsDocumentPlayingAudioChangedEventHandler {
+func NewICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2IsDocumentPlayingAudioChangedEventHandler {
 	impl := &ICoreWebView2IsDocumentPlayingAudioChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2IsDocumentPlayingAudioChangedEventHandlerComObj(impl, scoped).ICoreWebView2IsDocumentPlayingAudioChangedEventHandler()
 }

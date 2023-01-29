@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 973AE2EF-FF18-4894-8FB2-3C758F046810
-var IID_ICoreWebView2PermissionRequestedEventArgs = syscall.GUID{0x973AE2EF, 0xFF18, 0x4894, 
+var IID_ICoreWebView2PermissionRequestedEventArgs = syscall.GUID{0x973AE2EF, 0xFF18, 0x4894,
 	[8]byte{0x8F, 0xB2, 0x3C, 0x75, 0x8F, 0x04, 0x68, 0x10}}
 
 type ICoreWebView2PermissionRequestedEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2PermissionRequestedEventArgs struct {
 }
 
 func NewICoreWebView2PermissionRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2PermissionRequestedEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2PermissionRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -66,7 +66,6 @@ func (this *ICoreWebView2PermissionRequestedEventArgs) SetState(state int32) com
 func (this *ICoreWebView2PermissionRequestedEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[8]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-		com.AddToScope(deferral)
+	com.AddToScope(deferral)
 	return com.Error(ret)
 }
-

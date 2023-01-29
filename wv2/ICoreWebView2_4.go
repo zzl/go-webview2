@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 20D02D59-6DF2-42DC-BD06-F98A694B1302
-var IID_ICoreWebView2_4 = syscall.GUID{0x20D02D59, 0x6DF2, 0x42DC, 
+var IID_ICoreWebView2_4 = syscall.GUID{0x20D02D59, 0x6DF2, 0x42DC,
 	[8]byte{0xBD, 0x06, 0xF9, 0x8A, 0x69, 0x4B, 0x13, 0x02}}
 
 type ICoreWebView2_4 struct {
@@ -16,8 +16,8 @@ type ICoreWebView2_4 struct {
 }
 
 func NewICoreWebView2_4(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2_4 {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2_4)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -56,4 +56,3 @@ func (this *ICoreWebView2_4) Remove_DownloadStarting(token EventRegistrationToke
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), *(*uintptr)(unsafe.Pointer(&token)))
 	return com.Error(ret)
 }
-

@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 7A6A5834-D185-4DBF-B63F-4A9BC43107D4
-var IID_ICoreWebView2Frame2 = syscall.GUID{0x7A6A5834, 0xD185, 0x4DBF, 
+var IID_ICoreWebView2Frame2 = syscall.GUID{0x7A6A5834, 0xD185, 0x4DBF,
 	[8]byte{0xB6, 0x3F, 0x4A, 0x9B, 0xC4, 0x31, 0x07, 0xD4}}
 
 type ICoreWebView2Frame2 struct {
@@ -16,8 +16,8 @@ type ICoreWebView2Frame2 struct {
 }
 
 func NewICoreWebView2Frame2(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Frame2 {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2Frame2)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -110,4 +110,3 @@ func (this *ICoreWebView2Frame2) Remove_WebMessageReceived(token EventRegistrati
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), *(*uintptr)(unsafe.Pointer(&token)))
 	return com.Error(ret)
 }
-

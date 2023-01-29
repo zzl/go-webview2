@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 435C7DC8-9BAA-11EB-A8B3-0242AC130003
-var IID_ICoreWebView2FrameNameChangedEventHandler = syscall.GUID{0x435C7DC8, 0x9BAA, 0x11EB, 
+var IID_ICoreWebView2FrameNameChangedEventHandler = syscall.GUID{0x435C7DC8, 0x9BAA, 0x11EB,
 	[8]byte{0xA8, 0xB3, 0x02, 0x42, 0xAC, 0x13, 0x00, 0x03}}
 
 type ICoreWebView2FrameNameChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2FrameNameChangedEventHandlerImpl) Invoke(sender *ICoreW
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2FrameNameChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2FrameNameChangedEventHandlerComObj) BuildVtbl(lock bool
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2FrameNameChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2FrameNameChangedEventHandlerVtbl
 	}
 	_pICoreWebView2FrameNameChangedEventHandlerVtbl = &ICoreWebView2FrameNameChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2FrameNameChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2FrameNameChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2FrameNameChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2FrameNameChangedEventHandlerComObj) ICoreWebView2FrameNameChangedEventHandler() *ICoreWebView2FrameNameChangedEventHandler{
+func (this *ICoreWebView2FrameNameChangedEventHandlerComObj) ICoreWebView2FrameNameChangedEventHandler() *ICoreWebView2FrameNameChangedEventHandler {
 	return (*ICoreWebView2FrameNameChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2FrameNameChangedEventHandlerComObj(impl ICoreWebView2FrameN
 }
 
 func NewICoreWebView2FrameNameChangedEventHandler(impl ICoreWebView2FrameNameChangedEventHandlerInterface) *ICoreWebView2FrameNameChangedEventHandler {
-	return NewICoreWebView2FrameNameChangedEventHandlerComObj(impl, true).ICoreWebView2FrameNameChangedEventHandler()}
+	return NewICoreWebView2FrameNameChangedEventHandlerComObj(impl, true).ICoreWebView2FrameNameChangedEventHandler()
+}
 
 //
 type ICoreWebView2FrameNameChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2FrameNameChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2FrameNameChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2FrameNameChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2FrameNameChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2FrameNameChangedEventHandler {
+func NewICoreWebView2FrameNameChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2Frame, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2FrameNameChangedEventHandler {
 	impl := &ICoreWebView2FrameNameChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2FrameNameChangedEventHandlerComObj(impl, scoped).ICoreWebView2FrameNameChangedEventHandler()
 }

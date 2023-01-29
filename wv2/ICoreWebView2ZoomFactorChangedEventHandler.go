@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // B52D71D6-C4DF-4543-A90C-64A3E60F38CB
-var IID_ICoreWebView2ZoomFactorChangedEventHandler = syscall.GUID{0xB52D71D6, 0xC4DF, 0x4543, 
+var IID_ICoreWebView2ZoomFactorChangedEventHandler = syscall.GUID{0xB52D71D6, 0xC4DF, 0x4543,
 	[8]byte{0xA9, 0x0C, 0x64, 0xA3, 0xE6, 0x0F, 0x38, 0xCB}}
 
 type ICoreWebView2ZoomFactorChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2ZoomFactorChangedEventHandlerImpl) Invoke(sender *ICore
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2ZoomFactorChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2ZoomFactorChangedEventHandlerComObj) BuildVtbl(lock boo
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2ZoomFactorChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2ZoomFactorChangedEventHandlerVtbl
 	}
 	_pICoreWebView2ZoomFactorChangedEventHandlerVtbl = &ICoreWebView2ZoomFactorChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2ZoomFactorChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2ZoomFactorChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2ZoomFactorChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2ZoomFactorChangedEventHandlerComObj) ICoreWebView2ZoomFactorChangedEventHandler() *ICoreWebView2ZoomFactorChangedEventHandler{
+func (this *ICoreWebView2ZoomFactorChangedEventHandlerComObj) ICoreWebView2ZoomFactorChangedEventHandler() *ICoreWebView2ZoomFactorChangedEventHandler {
 	return (*ICoreWebView2ZoomFactorChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2ZoomFactorChangedEventHandlerComObj(impl ICoreWebView2ZoomF
 }
 
 func NewICoreWebView2ZoomFactorChangedEventHandler(impl ICoreWebView2ZoomFactorChangedEventHandlerInterface) *ICoreWebView2ZoomFactorChangedEventHandler {
-	return NewICoreWebView2ZoomFactorChangedEventHandlerComObj(impl, true).ICoreWebView2ZoomFactorChangedEventHandler()}
+	return NewICoreWebView2ZoomFactorChangedEventHandlerComObj(impl, true).ICoreWebView2ZoomFactorChangedEventHandler()
+}
 
 //
 type ICoreWebView2ZoomFactorChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2ZoomFactorChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2ZoomFactorChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2ZoomFactorChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2ZoomFactorChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2ZoomFactorChangedEventHandler {
+func NewICoreWebView2ZoomFactorChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2ZoomFactorChangedEventHandler {
 	impl := &ICoreWebView2ZoomFactorChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2ZoomFactorChangedEventHandlerComObj(impl, scoped).ICoreWebView2ZoomFactorChangedEventHandler()
 }

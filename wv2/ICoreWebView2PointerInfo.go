@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // E6995887-D10D-4F5D-9359-4CE46E4F96B9
-var IID_ICoreWebView2PointerInfo = syscall.GUID{0xE6995887, 0xD10D, 0x4F5D, 
+var IID_ICoreWebView2PointerInfo = syscall.GUID{0xE6995887, 0xD10D, 0x4F5D,
 	[8]byte{0x93, 0x59, 0x4C, 0xE4, 0x6E, 0x4F, 0x96, 0xB9}}
 
 type ICoreWebView2PointerInfo struct {
@@ -16,8 +16,8 @@ type ICoreWebView2PointerInfo struct {
 }
 
 func NewICoreWebView2PointerInfo(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2PointerInfo {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2PointerInfo)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -368,4 +368,3 @@ func (this *ICoreWebView2PointerInfo) SetTouchPressure(touchPressure uint32) com
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(touchPressure))
 	return com.Error(ret)
 }
-

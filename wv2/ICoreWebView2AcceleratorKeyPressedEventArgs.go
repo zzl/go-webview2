@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 9F760F8A-FB79-42BE-9990-7B56900FA9C7
-var IID_ICoreWebView2AcceleratorKeyPressedEventArgs = syscall.GUID{0x9F760F8A, 0xFB79, 0x42BE, 
+var IID_ICoreWebView2AcceleratorKeyPressedEventArgs = syscall.GUID{0x9F760F8A, 0xFB79, 0x42BE,
 	[8]byte{0x99, 0x90, 0x7B, 0x56, 0x90, 0x0F, 0xA9, 0xC7}}
 
 type ICoreWebView2AcceleratorKeyPressedEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2AcceleratorKeyPressedEventArgs struct {
 }
 
 func NewICoreWebView2AcceleratorKeyPressedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2AcceleratorKeyPressedEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2AcceleratorKeyPressedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {

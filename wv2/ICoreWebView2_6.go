@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 499AADAC-D92C-4589-8A75-111BFC167795
-var IID_ICoreWebView2_6 = syscall.GUID{0x499AADAC, 0xD92C, 0x4589, 
+var IID_ICoreWebView2_6 = syscall.GUID{0x499AADAC, 0xD92C, 0x4589,
 	[8]byte{0x8A, 0x75, 0x11, 0x1B, 0xFC, 0x16, 0x77, 0x95}}
 
 type ICoreWebView2_6 struct {
@@ -16,8 +16,8 @@ type ICoreWebView2_6 struct {
 }
 
 func NewICoreWebView2_6(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2_6 {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2_6)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -38,4 +38,3 @@ func (this *ICoreWebView2_6) OpenTaskManagerWindow() com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 	return com.Error(ret)
 }
-

@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 69035451-6DC7-4CB8-9BCE-B2BD70AD289F
-var IID_ICoreWebView2MoveFocusRequestedEventHandler = syscall.GUID{0x69035451, 0x6DC7, 0x4CB8, 
+var IID_ICoreWebView2MoveFocusRequestedEventHandler = syscall.GUID{0x69035451, 0x6DC7, 0x4CB8,
 	[8]byte{0x9B, 0xCE, 0xB2, 0xBD, 0x70, 0xAD, 0x28, 0x9F}}
 
 type ICoreWebView2MoveFocusRequestedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2MoveFocusRequestedEventHandlerImpl) Invoke(sender *ICor
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2MoveFocusRequestedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2MoveFocusRequestedEventHandlerComObj) BuildVtbl(lock bo
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2MoveFocusRequestedEventHandlerVtbl != nil {
 		return _pICoreWebView2MoveFocusRequestedEventHandlerVtbl
 	}
 	_pICoreWebView2MoveFocusRequestedEventHandlerVtbl = &ICoreWebView2MoveFocusRequestedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2MoveFocusRequestedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2MoveFocusRequestedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2MoveFocusRequestedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2MoveFocusRequestedEventHandlerComObj) ICoreWebView2MoveFocusRequestedEventHandler() *ICoreWebView2MoveFocusRequestedEventHandler{
+func (this *ICoreWebView2MoveFocusRequestedEventHandlerComObj) ICoreWebView2MoveFocusRequestedEventHandler() *ICoreWebView2MoveFocusRequestedEventHandler {
 	return (*ICoreWebView2MoveFocusRequestedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,19 +94,19 @@ func NewICoreWebView2MoveFocusRequestedEventHandlerComObj(impl ICoreWebView2Move
 }
 
 func NewICoreWebView2MoveFocusRequestedEventHandler(impl ICoreWebView2MoveFocusRequestedEventHandlerInterface) *ICoreWebView2MoveFocusRequestedEventHandler {
-	return NewICoreWebView2MoveFocusRequestedEventHandlerComObj(impl, true).ICoreWebView2MoveFocusRequestedEventHandler()}
+	return NewICoreWebView2MoveFocusRequestedEventHandlerComObj(impl, true).ICoreWebView2MoveFocusRequestedEventHandler()
+}
 
-//
 type ICoreWebView2MoveFocusRequestedEventHandlerByFuncImpl struct {
 	ICoreWebView2MoveFocusRequestedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) com.Error
 }
-func (this *ICoreWebView2MoveFocusRequestedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) com.Error{
+
+func (this *ICoreWebView2MoveFocusRequestedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2MoveFocusRequestedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) com.Error, scoped bool) *ICoreWebView2MoveFocusRequestedEventHandler {
+func NewICoreWebView2MoveFocusRequestedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) com.Error, scoped bool) *ICoreWebView2MoveFocusRequestedEventHandler {
 	impl := &ICoreWebView2MoveFocusRequestedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2MoveFocusRequestedEventHandlerComObj(impl, scoped).ICoreWebView2MoveFocusRequestedEventHandler()
 }
-

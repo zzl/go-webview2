@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // B8611D99-EED6-4F3F-902C-A198502AD472
-var IID_ICoreWebView2ContextMenuTarget = syscall.GUID{0xB8611D99, 0xEED6, 0x4F3F, 
+var IID_ICoreWebView2ContextMenuTarget = syscall.GUID{0xB8611D99, 0xEED6, 0x4F3F,
 	[8]byte{0x90, 0x2C, 0xA1, 0x98, 0x50, 0x2A, 0xD4, 0x72}}
 
 type ICoreWebView2ContextMenuTarget struct {
@@ -16,8 +16,8 @@ type ICoreWebView2ContextMenuTarget struct {
 }
 
 func NewICoreWebView2ContextMenuTarget(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ContextMenuTarget {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2ContextMenuTarget)(unsafe.Pointer(pUnk))
 	if addRef {

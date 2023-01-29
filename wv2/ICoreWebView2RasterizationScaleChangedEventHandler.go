@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 9C98C8B1-AC53-427E-A345-3049B5524BBE
-var IID_ICoreWebView2RasterizationScaleChangedEventHandler = syscall.GUID{0x9C98C8B1, 0xAC53, 0x427E, 
+var IID_ICoreWebView2RasterizationScaleChangedEventHandler = syscall.GUID{0x9C98C8B1, 0xAC53, 0x427E,
 	[8]byte{0xA3, 0x45, 0x30, 0x49, 0xB5, 0x52, 0x4B, 0xBE}}
 
 type ICoreWebView2RasterizationScaleChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2RasterizationScaleChangedEventHandlerImpl) Invoke(sende
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2RasterizationScaleChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2RasterizationScaleChangedEventHandlerComObj) BuildVtbl(
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2RasterizationScaleChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2RasterizationScaleChangedEventHandlerVtbl
 	}
 	_pICoreWebView2RasterizationScaleChangedEventHandlerVtbl = &ICoreWebView2RasterizationScaleChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2RasterizationScaleChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2RasterizationScaleChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2RasterizationScaleChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2RasterizationScaleChangedEventHandlerComObj) ICoreWebView2RasterizationScaleChangedEventHandler() *ICoreWebView2RasterizationScaleChangedEventHandler{
+func (this *ICoreWebView2RasterizationScaleChangedEventHandlerComObj) ICoreWebView2RasterizationScaleChangedEventHandler() *ICoreWebView2RasterizationScaleChangedEventHandler {
 	return (*ICoreWebView2RasterizationScaleChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2RasterizationScaleChangedEventHandlerComObj(impl ICoreWebVi
 }
 
 func NewICoreWebView2RasterizationScaleChangedEventHandler(impl ICoreWebView2RasterizationScaleChangedEventHandlerInterface) *ICoreWebView2RasterizationScaleChangedEventHandler {
-	return NewICoreWebView2RasterizationScaleChangedEventHandlerComObj(impl, true).ICoreWebView2RasterizationScaleChangedEventHandler()}
+	return NewICoreWebView2RasterizationScaleChangedEventHandlerComObj(impl, true).ICoreWebView2RasterizationScaleChangedEventHandler()
+}
 
 //
 type ICoreWebView2RasterizationScaleChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2RasterizationScaleChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2RasterizationScaleChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2RasterizationScaleChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2RasterizationScaleChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2RasterizationScaleChangedEventHandler {
+func NewICoreWebView2RasterizationScaleChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2Controller, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2RasterizationScaleChangedEventHandler {
 	impl := &ICoreWebView2RasterizationScaleChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2RasterizationScaleChangedEventHandlerComObj(impl, scoped).ICoreWebView2RasterizationScaleChangedEventHandler()
 }

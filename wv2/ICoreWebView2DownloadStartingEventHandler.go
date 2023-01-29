@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // EFEDC989-C396-41CA-83F7-07F845A55724
-var IID_ICoreWebView2DownloadStartingEventHandler = syscall.GUID{0xEFEDC989, 0xC396, 0x41CA, 
+var IID_ICoreWebView2DownloadStartingEventHandler = syscall.GUID{0xEFEDC989, 0xC396, 0x41CA,
 	[8]byte{0x83, 0xF7, 0x07, 0xF8, 0x45, 0xA5, 0x57, 0x24}}
 
 type ICoreWebView2DownloadStartingEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2DownloadStartingEventHandlerImpl) Invoke(sender *ICoreW
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2DownloadStartingEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2DownloadStartingEventHandlerComObj) BuildVtbl(lock bool
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2DownloadStartingEventHandlerVtbl != nil {
 		return _pICoreWebView2DownloadStartingEventHandlerVtbl
 	}
 	_pICoreWebView2DownloadStartingEventHandlerVtbl = &ICoreWebView2DownloadStartingEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2DownloadStartingEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2DownloadStartingEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2DownloadStartingEventHandlerVtbl
 }
 
-func (this *ICoreWebView2DownloadStartingEventHandlerComObj) ICoreWebView2DownloadStartingEventHandler() *ICoreWebView2DownloadStartingEventHandler{
+func (this *ICoreWebView2DownloadStartingEventHandlerComObj) ICoreWebView2DownloadStartingEventHandler() *ICoreWebView2DownloadStartingEventHandler {
 	return (*ICoreWebView2DownloadStartingEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2DownloadStartingEventHandlerComObj(impl ICoreWebView2Downlo
 }
 
 func NewICoreWebView2DownloadStartingEventHandler(impl ICoreWebView2DownloadStartingEventHandlerInterface) *ICoreWebView2DownloadStartingEventHandler {
-	return NewICoreWebView2DownloadStartingEventHandlerComObj(impl, true).ICoreWebView2DownloadStartingEventHandler()}
+	return NewICoreWebView2DownloadStartingEventHandlerComObj(impl, true).ICoreWebView2DownloadStartingEventHandler()
+}
 
 //
 type ICoreWebView2DownloadStartingEventHandlerByFuncImpl struct {
 	ICoreWebView2DownloadStartingEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) com.Error
 }
-func (this *ICoreWebView2DownloadStartingEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) com.Error{
+
+func (this *ICoreWebView2DownloadStartingEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2DownloadStartingEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) com.Error, scoped bool) *ICoreWebView2DownloadStartingEventHandler {
+func NewICoreWebView2DownloadStartingEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) com.Error, scoped bool) *ICoreWebView2DownloadStartingEventHandler {
 	impl := &ICoreWebView2DownloadStartingEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2DownloadStartingEventHandlerComObj(impl, scoped).ICoreWebView2DownloadStartingEventHandler()
 }

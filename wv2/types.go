@@ -1,7 +1,7 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
@@ -15,19 +15,19 @@ type MIDL___MIDL_itf_webview2_0005_0001_0001__ struct {
 
 // struct COREWEBVIEW2_PHYSICAL_KEY_STATUS
 type COREWEBVIEW2_PHYSICAL_KEY_STATUS struct {
-	RepeatCount uint32
-	ScanCode uint32
+	RepeatCount   uint32
+	ScanCode      uint32
 	IsExtendedKey int32
 	IsMenuKeyDown int32
-	WasKeyDown int32
+	WasKeyDown    int32
 	IsKeyReleased int32
 }
 
 // struct tagRECT
 type TagRECT struct {
-	Left int32
-	Top int32
-	Right int32
+	Left   int32
+	Top    int32
+	Right  int32
 	Bottom int32
 }
 
@@ -42,7 +42,7 @@ type WireHWND = *RemotableHandle_
 // struct _RemotableHandle
 type RemotableHandle_ struct {
 	FContext int32
-	U uintptr
+	U        uintptr
 }
 
 // struct _LARGE_INTEGER
@@ -57,22 +57,22 @@ type ULARGE_INTEGER_ struct {
 
 // struct tagSTATSTG
 type TagSTATSTG struct {
-	PwcsName win32.PWSTR
-	Type uint32
-	CbSize ULARGE_INTEGER_
-	Mtime FILETIME_
-	Ctime FILETIME_
-	Atime FILETIME_
-	GrfMode uint32
+	PwcsName          win32.PWSTR
+	Type              uint32
+	CbSize            ULARGE_INTEGER_
+	Mtime             FILETIME_
+	Ctime             FILETIME_
+	Atime             FILETIME_
+	GrfMode           uint32
 	GrfLocksSupported uint32
-	Clsid syscall.GUID
-	GrfStateBits uint32
-	Reserved uint32
+	Clsid             syscall.GUID
+	GrfStateBits      uint32
+	Reserved          uint32
 }
 
 // struct _FILETIME
 type FILETIME_ struct {
-	DwLowDateTime uint32
+	DwLowDateTime  uint32
 	DwHighDateTime uint32
 }
 

@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 5A4F5069-5C15-47C3-8646-F4DE1C116670
-var IID_ICoreWebView2GetCookiesCompletedHandler = syscall.GUID{0x5A4F5069, 0x5C15, 0x47C3, 
+var IID_ICoreWebView2GetCookiesCompletedHandler = syscall.GUID{0x5A4F5069, 0x5C15, 0x47C3,
 	[8]byte{0x86, 0x46, 0xF4, 0xDE, 0x1C, 0x11, 0x66, 0x70}}
 
 type ICoreWebView2GetCookiesCompletedHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2GetCookiesCompletedHandlerImpl) Invoke(result com.Error
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2GetCookiesCompletedHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2GetCookiesCompletedHandlerComObj) BuildVtbl(lock bool) 
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2GetCookiesCompletedHandlerVtbl != nil {
 		return _pICoreWebView2GetCookiesCompletedHandlerVtbl
 	}
 	_pICoreWebView2GetCookiesCompletedHandlerVtbl = &ICoreWebView2GetCookiesCompletedHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2GetCookiesCompletedHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2GetCookiesCompletedHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2GetCookiesCompletedHandlerVtbl
 }
 
-func (this *ICoreWebView2GetCookiesCompletedHandlerComObj) ICoreWebView2GetCookiesCompletedHandler() *ICoreWebView2GetCookiesCompletedHandler{
+func (this *ICoreWebView2GetCookiesCompletedHandlerComObj) ICoreWebView2GetCookiesCompletedHandler() *ICoreWebView2GetCookiesCompletedHandler {
 	return (*ICoreWebView2GetCookiesCompletedHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2GetCookiesCompletedHandlerComObj(impl ICoreWebView2GetCooki
 }
 
 func NewICoreWebView2GetCookiesCompletedHandler(impl ICoreWebView2GetCookiesCompletedHandlerInterface) *ICoreWebView2GetCookiesCompletedHandler {
-	return NewICoreWebView2GetCookiesCompletedHandlerComObj(impl, true).ICoreWebView2GetCookiesCompletedHandler()}
+	return NewICoreWebView2GetCookiesCompletedHandlerComObj(impl, true).ICoreWebView2GetCookiesCompletedHandler()
+}
 
 //
 type ICoreWebView2GetCookiesCompletedHandlerByFuncImpl struct {
 	ICoreWebView2GetCookiesCompletedHandlerImpl
-	handlerFunc func (result com.Error, cookieList *ICoreWebView2CookieList) com.Error
+	handlerFunc func(result com.Error, cookieList *ICoreWebView2CookieList) com.Error
 }
-func (this *ICoreWebView2GetCookiesCompletedHandlerByFuncImpl) Invoke(result com.Error, cookieList *ICoreWebView2CookieList) com.Error{
+
+func (this *ICoreWebView2GetCookiesCompletedHandlerByFuncImpl) Invoke(result com.Error, cookieList *ICoreWebView2CookieList) com.Error {
 	return this.handlerFunc(result, cookieList)
 }
 
-func NewICoreWebView2GetCookiesCompletedHandlerByFunc(handlerFunc func (result com.Error, cookieList *ICoreWebView2CookieList) com.Error, scoped bool) *ICoreWebView2GetCookiesCompletedHandler {
+func NewICoreWebView2GetCookiesCompletedHandlerByFunc(handlerFunc func(result com.Error, cookieList *ICoreWebView2CookieList) com.Error, scoped bool) *ICoreWebView2GetCookiesCompletedHandler {
 	impl := &ICoreWebView2GetCookiesCompletedHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2GetCookiesCompletedHandlerComObj(impl, scoped).ICoreWebView2GetCookiesCompletedHandler()
 }

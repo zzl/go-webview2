@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 7390BB70-ABE0-4843-9529-F143B31B03D6
-var IID_ICoreWebView2ScriptDialogOpeningEventArgs = syscall.GUID{0x7390BB70, 0xABE0, 0x4843, 
+var IID_ICoreWebView2ScriptDialogOpeningEventArgs = syscall.GUID{0x7390BB70, 0xABE0, 0x4843,
 	[8]byte{0x95, 0x29, 0xF1, 0x43, 0xB3, 0x1B, 0x03, 0xD6}}
 
 type ICoreWebView2ScriptDialogOpeningEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2ScriptDialogOpeningEventArgs struct {
 }
 
 func NewICoreWebView2ScriptDialogOpeningEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ScriptDialogOpeningEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2ScriptDialogOpeningEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -78,7 +78,7 @@ func (this *ICoreWebView2ScriptDialogOpeningEventArgs) SetResultText(resultText 
 func (this *ICoreWebView2ScriptDialogOpeningEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-		com.AddToScope(deferral)
+	com.AddToScope(deferral)
 	return com.Error(ret)
 }
 

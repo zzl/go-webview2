@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-webview2/wv2"
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"strings"
 	"syscall"
 	"unsafe"

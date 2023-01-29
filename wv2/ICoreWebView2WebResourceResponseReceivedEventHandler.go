@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 7DE9898A-24F5-40C3-A2DE-D4F458E69828
-var IID_ICoreWebView2WebResourceResponseReceivedEventHandler = syscall.GUID{0x7DE9898A, 0x24F5, 0x40C3, 
+var IID_ICoreWebView2WebResourceResponseReceivedEventHandler = syscall.GUID{0x7DE9898A, 0x24F5, 0x40C3,
 	[8]byte{0xA2, 0xDE, 0xD4, 0xF4, 0x58, 0xE6, 0x98, 0x28}}
 
 type ICoreWebView2WebResourceResponseReceivedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2WebResourceResponseReceivedEventHandlerImpl) Invoke(sen
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2WebResourceResponseReceivedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2WebResourceResponseReceivedEventHandlerComObj) BuildVtb
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2WebResourceResponseReceivedEventHandlerVtbl != nil {
 		return _pICoreWebView2WebResourceResponseReceivedEventHandlerVtbl
 	}
 	_pICoreWebView2WebResourceResponseReceivedEventHandlerVtbl = &ICoreWebView2WebResourceResponseReceivedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2WebResourceResponseReceivedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2WebResourceResponseReceivedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2WebResourceResponseReceivedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2WebResourceResponseReceivedEventHandlerComObj) ICoreWebView2WebResourceResponseReceivedEventHandler() *ICoreWebView2WebResourceResponseReceivedEventHandler{
+func (this *ICoreWebView2WebResourceResponseReceivedEventHandlerComObj) ICoreWebView2WebResourceResponseReceivedEventHandler() *ICoreWebView2WebResourceResponseReceivedEventHandler {
 	return (*ICoreWebView2WebResourceResponseReceivedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2WebResourceResponseReceivedEventHandlerComObj(impl ICoreWeb
 }
 
 func NewICoreWebView2WebResourceResponseReceivedEventHandler(impl ICoreWebView2WebResourceResponseReceivedEventHandlerInterface) *ICoreWebView2WebResourceResponseReceivedEventHandler {
-	return NewICoreWebView2WebResourceResponseReceivedEventHandlerComObj(impl, true).ICoreWebView2WebResourceResponseReceivedEventHandler()}
+	return NewICoreWebView2WebResourceResponseReceivedEventHandlerComObj(impl, true).ICoreWebView2WebResourceResponseReceivedEventHandler()
+}
 
 //
 type ICoreWebView2WebResourceResponseReceivedEventHandlerByFuncImpl struct {
 	ICoreWebView2WebResourceResponseReceivedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) com.Error
 }
-func (this *ICoreWebView2WebResourceResponseReceivedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) com.Error{
+
+func (this *ICoreWebView2WebResourceResponseReceivedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2WebResourceResponseReceivedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) com.Error, scoped bool) *ICoreWebView2WebResourceResponseReceivedEventHandler {
+func NewICoreWebView2WebResourceResponseReceivedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) com.Error, scoped bool) *ICoreWebView2WebResourceResponseReceivedEventHandler {
 	impl := &ICoreWebView2WebResourceResponseReceivedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2WebResourceResponseReceivedEventHandlerComObj(impl, scoped).ICoreWebView2WebResourceResponseReceivedEventHandler()
 }

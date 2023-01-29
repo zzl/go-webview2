@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 697E05E9-3D8F-45FA-96F4-8FFE1EDEDAF5
-var IID_ICoreWebView2CapturePreviewCompletedHandler = syscall.GUID{0x697E05E9, 0x3D8F, 0x45FA, 
+var IID_ICoreWebView2CapturePreviewCompletedHandler = syscall.GUID{0x697E05E9, 0x3D8F, 0x45FA,
 	[8]byte{0x96, 0xF4, 0x8F, 0xFE, 0x1E, 0xDE, 0xDA, 0xF5}}
 
 type ICoreWebView2CapturePreviewCompletedHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2CapturePreviewCompletedHandlerImpl) Invoke(errorCode co
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2CapturePreviewCompletedHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2CapturePreviewCompletedHandlerComObj) BuildVtbl(lock bo
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2CapturePreviewCompletedHandlerVtbl != nil {
 		return _pICoreWebView2CapturePreviewCompletedHandlerVtbl
 	}
 	_pICoreWebView2CapturePreviewCompletedHandlerVtbl = &ICoreWebView2CapturePreviewCompletedHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2CapturePreviewCompletedHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2CapturePreviewCompletedHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2CapturePreviewCompletedHandlerVtbl
 }
 
-func (this *ICoreWebView2CapturePreviewCompletedHandlerComObj) ICoreWebView2CapturePreviewCompletedHandler() *ICoreWebView2CapturePreviewCompletedHandler{
+func (this *ICoreWebView2CapturePreviewCompletedHandlerComObj) ICoreWebView2CapturePreviewCompletedHandler() *ICoreWebView2CapturePreviewCompletedHandler {
 	return (*ICoreWebView2CapturePreviewCompletedHandler)(unsafe.Pointer(this))
 }
 
@@ -93,19 +94,19 @@ func NewICoreWebView2CapturePreviewCompletedHandlerComObj(impl ICoreWebView2Capt
 }
 
 func NewICoreWebView2CapturePreviewCompletedHandler(impl ICoreWebView2CapturePreviewCompletedHandlerInterface) *ICoreWebView2CapturePreviewCompletedHandler {
-	return NewICoreWebView2CapturePreviewCompletedHandlerComObj(impl, true).ICoreWebView2CapturePreviewCompletedHandler()}
+	return NewICoreWebView2CapturePreviewCompletedHandlerComObj(impl, true).ICoreWebView2CapturePreviewCompletedHandler()
+}
 
-//
 type ICoreWebView2CapturePreviewCompletedHandlerByFuncImpl struct {
 	ICoreWebView2CapturePreviewCompletedHandlerImpl
-	handlerFunc func (errorCode com.Error) com.Error
+	handlerFunc func(errorCode com.Error) com.Error
 }
-func (this *ICoreWebView2CapturePreviewCompletedHandlerByFuncImpl) Invoke(errorCode com.Error) com.Error{
+
+func (this *ICoreWebView2CapturePreviewCompletedHandlerByFuncImpl) Invoke(errorCode com.Error) com.Error {
 	return this.handlerFunc(errorCode)
 }
 
-func NewICoreWebView2CapturePreviewCompletedHandlerByFunc(handlerFunc func (errorCode com.Error) com.Error, scoped bool) *ICoreWebView2CapturePreviewCompletedHandler {
+func NewICoreWebView2CapturePreviewCompletedHandlerByFunc(handlerFunc func(errorCode com.Error) com.Error, scoped bool) *ICoreWebView2CapturePreviewCompletedHandler {
 	impl := &ICoreWebView2CapturePreviewCompletedHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2CapturePreviewCompletedHandlerComObj(impl, scoped).ICoreWebView2CapturePreviewCompletedHandler()
 }
-

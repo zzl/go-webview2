@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // D33A35BF-1C49-4F98-93AB-006E0533FE1C
-var IID_ICoreWebView2NavigationCompletedEventHandler = syscall.GUID{0xD33A35BF, 0x1C49, 0x4F98, 
+var IID_ICoreWebView2NavigationCompletedEventHandler = syscall.GUID{0xD33A35BF, 0x1C49, 0x4F98,
 	[8]byte{0x93, 0xAB, 0x00, 0x6E, 0x05, 0x33, 0xFE, 0x1C}}
 
 type ICoreWebView2NavigationCompletedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2NavigationCompletedEventHandlerImpl) Invoke(sender *ICo
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2NavigationCompletedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2NavigationCompletedEventHandlerComObj) BuildVtbl(lock b
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2NavigationCompletedEventHandlerVtbl != nil {
 		return _pICoreWebView2NavigationCompletedEventHandlerVtbl
 	}
 	_pICoreWebView2NavigationCompletedEventHandlerVtbl = &ICoreWebView2NavigationCompletedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2NavigationCompletedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2NavigationCompletedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2NavigationCompletedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2NavigationCompletedEventHandlerComObj) ICoreWebView2NavigationCompletedEventHandler() *ICoreWebView2NavigationCompletedEventHandler{
+func (this *ICoreWebView2NavigationCompletedEventHandlerComObj) ICoreWebView2NavigationCompletedEventHandler() *ICoreWebView2NavigationCompletedEventHandler {
 	return (*ICoreWebView2NavigationCompletedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2NavigationCompletedEventHandlerComObj(impl ICoreWebView2Nav
 }
 
 func NewICoreWebView2NavigationCompletedEventHandler(impl ICoreWebView2NavigationCompletedEventHandlerInterface) *ICoreWebView2NavigationCompletedEventHandler {
-	return NewICoreWebView2NavigationCompletedEventHandlerComObj(impl, true).ICoreWebView2NavigationCompletedEventHandler()}
+	return NewICoreWebView2NavigationCompletedEventHandlerComObj(impl, true).ICoreWebView2NavigationCompletedEventHandler()
+}
 
 //
 type ICoreWebView2NavigationCompletedEventHandlerByFuncImpl struct {
 	ICoreWebView2NavigationCompletedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) com.Error
 }
-func (this *ICoreWebView2NavigationCompletedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) com.Error{
+
+func (this *ICoreWebView2NavigationCompletedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2NavigationCompletedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) com.Error, scoped bool) *ICoreWebView2NavigationCompletedEventHandler {
+func NewICoreWebView2NavigationCompletedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) com.Error, scoped bool) *ICoreWebView2NavigationCompletedEventHandler {
 	impl := &ICoreWebView2NavigationCompletedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2NavigationCompletedEventHandlerComObj(impl, scoped).ICoreWebView2NavigationCompletedEventHandler()
 }

@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 364471E7-F2BE-4910-BDBA-D72077D51C4B
-var IID_ICoreWebView2ContentLoadingEventHandler = syscall.GUID{0x364471E7, 0xF2BE, 0x4910, 
+var IID_ICoreWebView2ContentLoadingEventHandler = syscall.GUID{0x364471E7, 0xF2BE, 0x4910,
 	[8]byte{0xBD, 0xBA, 0xD7, 0x20, 0x77, 0xD5, 0x1C, 0x4B}}
 
 type ICoreWebView2ContentLoadingEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2ContentLoadingEventHandlerImpl) Invoke(sender *ICoreWeb
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2ContentLoadingEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2ContentLoadingEventHandlerComObj) BuildVtbl(lock bool) 
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2ContentLoadingEventHandlerVtbl != nil {
 		return _pICoreWebView2ContentLoadingEventHandlerVtbl
 	}
 	_pICoreWebView2ContentLoadingEventHandlerVtbl = &ICoreWebView2ContentLoadingEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2ContentLoadingEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2ContentLoadingEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2ContentLoadingEventHandlerVtbl
 }
 
-func (this *ICoreWebView2ContentLoadingEventHandlerComObj) ICoreWebView2ContentLoadingEventHandler() *ICoreWebView2ContentLoadingEventHandler{
+func (this *ICoreWebView2ContentLoadingEventHandlerComObj) ICoreWebView2ContentLoadingEventHandler() *ICoreWebView2ContentLoadingEventHandler {
 	return (*ICoreWebView2ContentLoadingEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2ContentLoadingEventHandlerComObj(impl ICoreWebView2ContentL
 }
 
 func NewICoreWebView2ContentLoadingEventHandler(impl ICoreWebView2ContentLoadingEventHandlerInterface) *ICoreWebView2ContentLoadingEventHandler {
-	return NewICoreWebView2ContentLoadingEventHandlerComObj(impl, true).ICoreWebView2ContentLoadingEventHandler()}
+	return NewICoreWebView2ContentLoadingEventHandlerComObj(impl, true).ICoreWebView2ContentLoadingEventHandler()
+}
 
 //
 type ICoreWebView2ContentLoadingEventHandlerByFuncImpl struct {
 	ICoreWebView2ContentLoadingEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) com.Error
 }
-func (this *ICoreWebView2ContentLoadingEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) com.Error{
+
+func (this *ICoreWebView2ContentLoadingEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2ContentLoadingEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) com.Error, scoped bool) *ICoreWebView2ContentLoadingEventHandler {
+func NewICoreWebView2ContentLoadingEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) com.Error, scoped bool) *ICoreWebView2ContentLoadingEventHandler {
 	impl := &ICoreWebView2ContentLoadingEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2ContentLoadingEventHandlerComObj(impl, scoped).ICoreWebView2ContentLoadingEventHandler()
 }

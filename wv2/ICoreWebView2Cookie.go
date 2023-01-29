@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // AD26D6BE-1486-43E6-BF87-A2034006CA21
-var IID_ICoreWebView2Cookie = syscall.GUID{0xAD26D6BE, 0x1486, 0x43E6, 
+var IID_ICoreWebView2Cookie = syscall.GUID{0xAD26D6BE, 0x1486, 0x43E6,
 	[8]byte{0xBF, 0x87, 0xA2, 0x03, 0x40, 0x06, 0xCA, 0x21}}
 
 type ICoreWebView2Cookie struct {
@@ -16,8 +16,8 @@ type ICoreWebView2Cookie struct {
 }
 
 func NewICoreWebView2Cookie(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Cookie {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2Cookie)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -116,4 +116,3 @@ func (this *ICoreWebView2Cookie) GetIsSession(isSession *int32) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(isSession)))
 	return com.Error(ret)
 }
-

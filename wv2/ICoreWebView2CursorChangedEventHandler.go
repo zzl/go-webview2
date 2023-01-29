@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 9DA43CCC-26E1-4DAD-B56C-D8961C94C571
-var IID_ICoreWebView2CursorChangedEventHandler = syscall.GUID{0x9DA43CCC, 0x26E1, 0x4DAD, 
+var IID_ICoreWebView2CursorChangedEventHandler = syscall.GUID{0x9DA43CCC, 0x26E1, 0x4DAD,
 	[8]byte{0xB5, 0x6C, 0xD8, 0x96, 0x1C, 0x94, 0xC5, 0x71}}
 
 type ICoreWebView2CursorChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2CursorChangedEventHandlerImpl) Invoke(sender *ICoreWebV
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2CursorChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2CursorChangedEventHandlerComObj) BuildVtbl(lock bool) *
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2CursorChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2CursorChangedEventHandlerVtbl
 	}
 	_pICoreWebView2CursorChangedEventHandlerVtbl = &ICoreWebView2CursorChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2CursorChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2CursorChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2CursorChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2CursorChangedEventHandlerComObj) ICoreWebView2CursorChangedEventHandler() *ICoreWebView2CursorChangedEventHandler{
+func (this *ICoreWebView2CursorChangedEventHandlerComObj) ICoreWebView2CursorChangedEventHandler() *ICoreWebView2CursorChangedEventHandler {
 	return (*ICoreWebView2CursorChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2CursorChangedEventHandlerComObj(impl ICoreWebView2CursorCha
 }
 
 func NewICoreWebView2CursorChangedEventHandler(impl ICoreWebView2CursorChangedEventHandlerInterface) *ICoreWebView2CursorChangedEventHandler {
-	return NewICoreWebView2CursorChangedEventHandlerComObj(impl, true).ICoreWebView2CursorChangedEventHandler()}
+	return NewICoreWebView2CursorChangedEventHandlerComObj(impl, true).ICoreWebView2CursorChangedEventHandler()
+}
 
 //
 type ICoreWebView2CursorChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2CursorChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2CursorChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2CursorChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2CursorChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2CursorChangedEventHandler {
+func NewICoreWebView2CursorChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2CompositionController, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2CursorChangedEventHandler {
 	impl := &ICoreWebView2CursorChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2CursorChangedEventHandlerComObj(impl, scoped).ICoreWebView2CursorChangedEventHandler()
 }

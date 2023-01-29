@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0F99A40C-E962-4207-9E92-E3D542EFF849
-var IID_ICoreWebView2WebMessageReceivedEventArgs = syscall.GUID{0x0F99A40C, 0xE962, 0x4207, 
+var IID_ICoreWebView2WebMessageReceivedEventArgs = syscall.GUID{0x0F99A40C, 0xE962, 0x4207,
 	[8]byte{0x9E, 0x92, 0xE3, 0xD5, 0x42, 0xEF, 0xF8, 0x49}}
 
 type ICoreWebView2WebMessageReceivedEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2WebMessageReceivedEventArgs struct {
 }
 
 func NewICoreWebView2WebMessageReceivedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2WebMessageReceivedEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2WebMessageReceivedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -50,4 +50,3 @@ func (this *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString(w
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(webMessageAsString)))
 	return com.Error(ret)
 }
-

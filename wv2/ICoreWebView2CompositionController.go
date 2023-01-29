@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 3DF9B733-B9AE-4A15-86B4-EB9EE9826469
-var IID_ICoreWebView2CompositionController = syscall.GUID{0x3DF9B733, 0xB9AE, 0x4A15, 
+var IID_ICoreWebView2CompositionController = syscall.GUID{0x3DF9B733, 0xB9AE, 0x4A15,
 	[8]byte{0x86, 0xB4, 0xEB, 0x9E, 0xE9, 0x82, 0x64, 0x69}}
 
 type ICoreWebView2CompositionController struct {
@@ -16,8 +16,8 @@ type ICoreWebView2CompositionController struct {
 }
 
 func NewICoreWebView2CompositionController(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2CompositionController {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2CompositionController)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,7 +36,7 @@ func (this *ICoreWebView2CompositionController) IID() *syscall.GUID {
 func (this *ICoreWebView2CompositionController) GetRootVisualTarget(target **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(target)))
-		com.AddToScope(target)
+	com.AddToScope(target)
 	return com.Error(ret)
 }
 
@@ -81,4 +81,3 @@ func (this *ICoreWebView2CompositionController) Remove_CursorChanged(token Event
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), *(*uintptr)(unsafe.Pointer(&token)))
 	return com.Error(ret)
 }
-

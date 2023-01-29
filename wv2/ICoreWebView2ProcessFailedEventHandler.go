@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 79E0AEA4-990B-42D9-AA1D-0FCC2E5BC7F1
-var IID_ICoreWebView2ProcessFailedEventHandler = syscall.GUID{0x79E0AEA4, 0x990B, 0x42D9, 
+var IID_ICoreWebView2ProcessFailedEventHandler = syscall.GUID{0x79E0AEA4, 0x990B, 0x42D9,
 	[8]byte{0xAA, 0x1D, 0x0F, 0xCC, 0x2E, 0x5B, 0xC7, 0xF1}}
 
 type ICoreWebView2ProcessFailedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2ProcessFailedEventHandlerImpl) Invoke(sender *ICoreWebV
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2ProcessFailedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2ProcessFailedEventHandlerComObj) BuildVtbl(lock bool) *
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2ProcessFailedEventHandlerVtbl != nil {
 		return _pICoreWebView2ProcessFailedEventHandlerVtbl
 	}
 	_pICoreWebView2ProcessFailedEventHandlerVtbl = &ICoreWebView2ProcessFailedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2ProcessFailedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2ProcessFailedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2ProcessFailedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2ProcessFailedEventHandlerComObj) ICoreWebView2ProcessFailedEventHandler() *ICoreWebView2ProcessFailedEventHandler{
+func (this *ICoreWebView2ProcessFailedEventHandlerComObj) ICoreWebView2ProcessFailedEventHandler() *ICoreWebView2ProcessFailedEventHandler {
 	return (*ICoreWebView2ProcessFailedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,19 +94,19 @@ func NewICoreWebView2ProcessFailedEventHandlerComObj(impl ICoreWebView2ProcessFa
 }
 
 func NewICoreWebView2ProcessFailedEventHandler(impl ICoreWebView2ProcessFailedEventHandlerInterface) *ICoreWebView2ProcessFailedEventHandler {
-	return NewICoreWebView2ProcessFailedEventHandlerComObj(impl, true).ICoreWebView2ProcessFailedEventHandler()}
+	return NewICoreWebView2ProcessFailedEventHandlerComObj(impl, true).ICoreWebView2ProcessFailedEventHandler()
+}
 
-//
 type ICoreWebView2ProcessFailedEventHandlerByFuncImpl struct {
 	ICoreWebView2ProcessFailedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) com.Error
 }
-func (this *ICoreWebView2ProcessFailedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) com.Error{
+
+func (this *ICoreWebView2ProcessFailedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2ProcessFailedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) com.Error, scoped bool) *ICoreWebView2ProcessFailedEventHandler {
+func NewICoreWebView2ProcessFailedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) com.Error, scoped bool) *ICoreWebView2ProcessFailedEventHandler {
 	impl := &ICoreWebView2ProcessFailedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2ProcessFailedEventHandlerComObj(impl, scoped).ICoreWebView2ProcessFailedEventHandler()
 }
-

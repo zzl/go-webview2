@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 6C4819F3-C9B7-4260-8127-C9F5BDE7F68C
-var IID_ICoreWebView2CreateCoreWebView2ControllerCompletedHandler = syscall.GUID{0x6C4819F3, 0xC9B7, 0x4260, 
+var IID_ICoreWebView2CreateCoreWebView2ControllerCompletedHandler = syscall.GUID{0x6C4819F3, 0xC9B7, 0x4260,
 	[8]byte{0x81, 0x27, 0xC9, 0xF5, 0xBD, 0xE7, 0xF6, 0x8C}}
 
 type ICoreWebView2CreateCoreWebView2ControllerCompletedHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerImpl) Invok
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerComObj) Bui
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl != nil {
 		return _pICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl
 	}
 	_pICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl = &ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl
 }
 
-func (this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerComObj) ICoreWebView2CreateCoreWebView2ControllerCompletedHandler() *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler{
+func (this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerComObj) ICoreWebView2CreateCoreWebView2ControllerCompletedHandler() *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler {
 	return (*ICoreWebView2CreateCoreWebView2ControllerCompletedHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2CreateCoreWebView2ControllerCompletedHandlerComObj(impl ICo
 }
 
 func NewICoreWebView2CreateCoreWebView2ControllerCompletedHandler(impl ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerInterface) *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler {
-	return NewICoreWebView2CreateCoreWebView2ControllerCompletedHandlerComObj(impl, true).ICoreWebView2CreateCoreWebView2ControllerCompletedHandler()}
+	return NewICoreWebView2CreateCoreWebView2ControllerCompletedHandlerComObj(impl, true).ICoreWebView2CreateCoreWebView2ControllerCompletedHandler()
+}
 
 //
 type ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerByFuncImpl struct {
 	ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerImpl
-	handlerFunc func (errorCode com.Error, createdController *ICoreWebView2Controller) com.Error
+	handlerFunc func(errorCode com.Error, createdController *ICoreWebView2Controller) com.Error
 }
-func (this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, createdController *ICoreWebView2Controller) com.Error{
+
+func (this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, createdController *ICoreWebView2Controller) com.Error {
 	return this.handlerFunc(errorCode, createdController)
 }
 
-func NewICoreWebView2CreateCoreWebView2ControllerCompletedHandlerByFunc(handlerFunc func (errorCode com.Error, createdController *ICoreWebView2Controller) com.Error, scoped bool) *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler {
+func NewICoreWebView2CreateCoreWebView2ControllerCompletedHandlerByFunc(handlerFunc func(errorCode com.Error, createdController *ICoreWebView2Controller) com.Error, scoped bool) *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler {
 	impl := &ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2CreateCoreWebView2ControllerCompletedHandlerComObj(impl, scoped).ICoreWebView2CreateCoreWebView2ControllerCompletedHandler()
 }

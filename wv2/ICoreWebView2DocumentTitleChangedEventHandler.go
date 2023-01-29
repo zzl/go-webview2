@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // F5F2B923-953E-4042-9F95-F3A118E1AFD4
-var IID_ICoreWebView2DocumentTitleChangedEventHandler = syscall.GUID{0xF5F2B923, 0x953E, 0x4042, 
+var IID_ICoreWebView2DocumentTitleChangedEventHandler = syscall.GUID{0xF5F2B923, 0x953E, 0x4042,
 	[8]byte{0x9F, 0x95, 0xF3, 0xA1, 0x18, 0xE1, 0xAF, 0xD4}}
 
 type ICoreWebView2DocumentTitleChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2DocumentTitleChangedEventHandlerImpl) Invoke(sender *IC
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2DocumentTitleChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2DocumentTitleChangedEventHandlerComObj) BuildVtbl(lock 
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2DocumentTitleChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2DocumentTitleChangedEventHandlerVtbl
 	}
 	_pICoreWebView2DocumentTitleChangedEventHandlerVtbl = &ICoreWebView2DocumentTitleChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2DocumentTitleChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2DocumentTitleChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2DocumentTitleChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2DocumentTitleChangedEventHandlerComObj) ICoreWebView2DocumentTitleChangedEventHandler() *ICoreWebView2DocumentTitleChangedEventHandler{
+func (this *ICoreWebView2DocumentTitleChangedEventHandlerComObj) ICoreWebView2DocumentTitleChangedEventHandler() *ICoreWebView2DocumentTitleChangedEventHandler {
 	return (*ICoreWebView2DocumentTitleChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2DocumentTitleChangedEventHandlerComObj(impl ICoreWebView2Do
 }
 
 func NewICoreWebView2DocumentTitleChangedEventHandler(impl ICoreWebView2DocumentTitleChangedEventHandlerInterface) *ICoreWebView2DocumentTitleChangedEventHandler {
-	return NewICoreWebView2DocumentTitleChangedEventHandlerComObj(impl, true).ICoreWebView2DocumentTitleChangedEventHandler()}
+	return NewICoreWebView2DocumentTitleChangedEventHandlerComObj(impl, true).ICoreWebView2DocumentTitleChangedEventHandler()
+}
 
 //
 type ICoreWebView2DocumentTitleChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2DocumentTitleChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2DocumentTitleChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2DocumentTitleChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2DocumentTitleChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2DocumentTitleChangedEventHandler {
+func NewICoreWebView2DocumentTitleChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2DocumentTitleChangedEventHandler {
 	impl := &ICoreWebView2DocumentTitleChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2DocumentTitleChangedEventHandlerComObj(impl, scoped).ICoreWebView2DocumentTitleChangedEventHandler()
 }

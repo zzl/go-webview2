@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // B99369F3-9B11-47B5-BC6F-8E7895FCEA17
-var IID_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler = syscall.GUID{0xB99369F3, 0x9B11, 0x47B5, 
+var IID_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler = syscall.GUID{0xB99369F3, 0x9B11, 0x47B5,
 	[8]byte{0xBC, 0x6F, 0x8E, 0x78, 0x95, 0xFC, 0xEA, 0x17}}
 
 type ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerImpl
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerComO
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl != nil {
 		return _pICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl
 	}
 	_pICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl = &ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl
 }
 
-func (this *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerComObj) ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler() *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler{
+func (this *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerComObj) ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler() *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler {
 	return (*ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerComObj(i
 }
 
 func NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler(impl ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerInterface) *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler {
-	return NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerComObj(impl, true).ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler()}
+	return NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerComObj(impl, true).ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler()
+}
 
 //
 type ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerByFuncImpl struct {
 	ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerImpl
-	handlerFunc func (errorCode com.Error, id string) com.Error
+	handlerFunc func(errorCode com.Error, id string) com.Error
 }
-func (this *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, id string) com.Error{
+
+func (this *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, id string) com.Error {
 	return this.handlerFunc(errorCode, id)
 }
 
-func NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerByFunc(handlerFunc func (errorCode com.Error, id string) com.Error, scoped bool) *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler {
+func NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerByFunc(handlerFunc func(errorCode com.Error, id string) com.Error, scoped bool) *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler {
 	impl := &ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerComObj(impl, scoped).ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler()
 }

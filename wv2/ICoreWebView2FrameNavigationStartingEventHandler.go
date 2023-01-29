@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // E79908BF-2D5D-4968-83DB-263FEA2C1DA3
-var IID_ICoreWebView2FrameNavigationStartingEventHandler = syscall.GUID{0xE79908BF, 0x2D5D, 0x4968, 
+var IID_ICoreWebView2FrameNavigationStartingEventHandler = syscall.GUID{0xE79908BF, 0x2D5D, 0x4968,
 	[8]byte{0x83, 0xDB, 0x26, 0x3F, 0xEA, 0x2C, 0x1D, 0xA3}}
 
 type ICoreWebView2FrameNavigationStartingEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2FrameNavigationStartingEventHandlerImpl) Invoke(sender 
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2FrameNavigationStartingEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2FrameNavigationStartingEventHandlerComObj) BuildVtbl(lo
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2FrameNavigationStartingEventHandlerVtbl != nil {
 		return _pICoreWebView2FrameNavigationStartingEventHandlerVtbl
 	}
 	_pICoreWebView2FrameNavigationStartingEventHandlerVtbl = &ICoreWebView2FrameNavigationStartingEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2FrameNavigationStartingEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2FrameNavigationStartingEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2FrameNavigationStartingEventHandlerVtbl
 }
 
-func (this *ICoreWebView2FrameNavigationStartingEventHandlerComObj) ICoreWebView2FrameNavigationStartingEventHandler() *ICoreWebView2FrameNavigationStartingEventHandler{
+func (this *ICoreWebView2FrameNavigationStartingEventHandlerComObj) ICoreWebView2FrameNavigationStartingEventHandler() *ICoreWebView2FrameNavigationStartingEventHandler {
 	return (*ICoreWebView2FrameNavigationStartingEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,19 +94,19 @@ func NewICoreWebView2FrameNavigationStartingEventHandlerComObj(impl ICoreWebView
 }
 
 func NewICoreWebView2FrameNavigationStartingEventHandler(impl ICoreWebView2FrameNavigationStartingEventHandlerInterface) *ICoreWebView2FrameNavigationStartingEventHandler {
-	return NewICoreWebView2FrameNavigationStartingEventHandlerComObj(impl, true).ICoreWebView2FrameNavigationStartingEventHandler()}
+	return NewICoreWebView2FrameNavigationStartingEventHandlerComObj(impl, true).ICoreWebView2FrameNavigationStartingEventHandler()
+}
 
-//
 type ICoreWebView2FrameNavigationStartingEventHandlerByFuncImpl struct {
 	ICoreWebView2FrameNavigationStartingEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) com.Error
 }
-func (this *ICoreWebView2FrameNavigationStartingEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) com.Error{
+
+func (this *ICoreWebView2FrameNavigationStartingEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2FrameNavigationStartingEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) com.Error, scoped bool) *ICoreWebView2FrameNavigationStartingEventHandler {
+func NewICoreWebView2FrameNavigationStartingEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) com.Error, scoped bool) *ICoreWebView2FrameNavigationStartingEventHandler {
 	impl := &ICoreWebView2FrameNavigationStartingEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2FrameNavigationStartingEventHandlerComObj(impl, scoped).ICoreWebView2FrameNavigationStartingEventHandler()
 }
-

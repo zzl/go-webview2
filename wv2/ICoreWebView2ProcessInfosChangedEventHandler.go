@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // F4AF0C39-44B9-40E9-8B11-0484CFB9E0A1
-var IID_ICoreWebView2ProcessInfosChangedEventHandler = syscall.GUID{0xF4AF0C39, 0x44B9, 0x40E9, 
+var IID_ICoreWebView2ProcessInfosChangedEventHandler = syscall.GUID{0xF4AF0C39, 0x44B9, 0x40E9,
 	[8]byte{0x8B, 0x11, 0x04, 0x84, 0xCF, 0xB9, 0xE0, 0xA1}}
 
 type ICoreWebView2ProcessInfosChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2ProcessInfosChangedEventHandlerImpl) Invoke(sender *ICo
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2ProcessInfosChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2ProcessInfosChangedEventHandlerComObj) BuildVtbl(lock b
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2ProcessInfosChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2ProcessInfosChangedEventHandlerVtbl
 	}
 	_pICoreWebView2ProcessInfosChangedEventHandlerVtbl = &ICoreWebView2ProcessInfosChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2ProcessInfosChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2ProcessInfosChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2ProcessInfosChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2ProcessInfosChangedEventHandlerComObj) ICoreWebView2ProcessInfosChangedEventHandler() *ICoreWebView2ProcessInfosChangedEventHandler{
+func (this *ICoreWebView2ProcessInfosChangedEventHandlerComObj) ICoreWebView2ProcessInfosChangedEventHandler() *ICoreWebView2ProcessInfosChangedEventHandler {
 	return (*ICoreWebView2ProcessInfosChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,19 +94,19 @@ func NewICoreWebView2ProcessInfosChangedEventHandlerComObj(impl ICoreWebView2Pro
 }
 
 func NewICoreWebView2ProcessInfosChangedEventHandler(impl ICoreWebView2ProcessInfosChangedEventHandlerInterface) *ICoreWebView2ProcessInfosChangedEventHandler {
-	return NewICoreWebView2ProcessInfosChangedEventHandlerComObj(impl, true).ICoreWebView2ProcessInfosChangedEventHandler()}
+	return NewICoreWebView2ProcessInfosChangedEventHandlerComObj(impl, true).ICoreWebView2ProcessInfosChangedEventHandler()
+}
 
-//
 type ICoreWebView2ProcessInfosChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2ProcessInfosChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2ProcessInfosChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2ProcessInfosChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2ProcessInfosChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2ProcessInfosChangedEventHandler {
+func NewICoreWebView2ProcessInfosChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2ProcessInfosChangedEventHandler {
 	impl := &ICoreWebView2ProcessInfosChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2ProcessInfosChangedEventHandlerComObj(impl, scoped).ICoreWebView2ProcessInfosChangedEventHandler()
 }
-

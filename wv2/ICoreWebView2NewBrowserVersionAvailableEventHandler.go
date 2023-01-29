@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // F9A2976E-D34E-44FC-ADEE-81B6B57CA914
-var IID_ICoreWebView2NewBrowserVersionAvailableEventHandler = syscall.GUID{0xF9A2976E, 0xD34E, 0x44FC, 
+var IID_ICoreWebView2NewBrowserVersionAvailableEventHandler = syscall.GUID{0xF9A2976E, 0xD34E, 0x44FC,
 	[8]byte{0xAD, 0xEE, 0x81, 0xB6, 0xB5, 0x7C, 0xA9, 0x14}}
 
 type ICoreWebView2NewBrowserVersionAvailableEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerImpl) Invoke(send
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2NewBrowserVersionAvailableEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerComObj) BuildVtbl
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2NewBrowserVersionAvailableEventHandlerVtbl != nil {
 		return _pICoreWebView2NewBrowserVersionAvailableEventHandlerVtbl
 	}
 	_pICoreWebView2NewBrowserVersionAvailableEventHandlerVtbl = &ICoreWebView2NewBrowserVersionAvailableEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2NewBrowserVersionAvailableEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2NewBrowserVersionAvailableEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2NewBrowserVersionAvailableEventHandlerVtbl
 }
 
-func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerComObj) ICoreWebView2NewBrowserVersionAvailableEventHandler() *ICoreWebView2NewBrowserVersionAvailableEventHandler{
+func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerComObj) ICoreWebView2NewBrowserVersionAvailableEventHandler() *ICoreWebView2NewBrowserVersionAvailableEventHandler {
 	return (*ICoreWebView2NewBrowserVersionAvailableEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,19 +94,19 @@ func NewICoreWebView2NewBrowserVersionAvailableEventHandlerComObj(impl ICoreWebV
 }
 
 func NewICoreWebView2NewBrowserVersionAvailableEventHandler(impl ICoreWebView2NewBrowserVersionAvailableEventHandlerInterface) *ICoreWebView2NewBrowserVersionAvailableEventHandler {
-	return NewICoreWebView2NewBrowserVersionAvailableEventHandlerComObj(impl, true).ICoreWebView2NewBrowserVersionAvailableEventHandler()}
+	return NewICoreWebView2NewBrowserVersionAvailableEventHandlerComObj(impl, true).ICoreWebView2NewBrowserVersionAvailableEventHandler()
+}
 
-//
 type ICoreWebView2NewBrowserVersionAvailableEventHandlerByFuncImpl struct {
 	ICoreWebView2NewBrowserVersionAvailableEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2NewBrowserVersionAvailableEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2NewBrowserVersionAvailableEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2NewBrowserVersionAvailableEventHandler {
+func NewICoreWebView2NewBrowserVersionAvailableEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2Environment, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2NewBrowserVersionAvailableEventHandler {
 	impl := &ICoreWebView2NewBrowserVersionAvailableEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2NewBrowserVersionAvailableEventHandlerComObj(impl, scoped).ICoreWebView2NewBrowserVersionAvailableEventHandler()
 }
-

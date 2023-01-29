@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 1F00663F-AF8C-4782-9CDD-DD01C52E34CB
-var IID_ICoreWebView2BrowserProcessExitedEventArgs = syscall.GUID{0x1F00663F, 0xAF8C, 0x4782, 
+var IID_ICoreWebView2BrowserProcessExitedEventArgs = syscall.GUID{0x1F00663F, 0xAF8C, 0x4782,
 	[8]byte{0x9C, 0xDD, 0xDD, 0x01, 0xC5, 0x2E, 0x34, 0xCB}}
 
 type ICoreWebView2BrowserProcessExitedEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2BrowserProcessExitedEventArgs struct {
 }
 
 func NewICoreWebView2BrowserProcessExitedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2BrowserProcessExitedEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2BrowserProcessExitedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -44,4 +44,3 @@ func (this *ICoreWebView2BrowserProcessExitedEventArgs) GetBrowserProcessId(valu
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(value)))
 	return com.Error(ret)
 }
-

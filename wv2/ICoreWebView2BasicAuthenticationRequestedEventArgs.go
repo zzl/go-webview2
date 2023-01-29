@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // EF05516F-D897-4F9E-B672-D8E2307A3FB0
-var IID_ICoreWebView2BasicAuthenticationRequestedEventArgs = syscall.GUID{0xEF05516F, 0xD897, 0x4F9E, 
+var IID_ICoreWebView2BasicAuthenticationRequestedEventArgs = syscall.GUID{0xEF05516F, 0xD897, 0x4F9E,
 	[8]byte{0xB6, 0x72, 0xD8, 0xE2, 0x30, 0x7A, 0x3F, 0xB0}}
 
 type ICoreWebView2BasicAuthenticationRequestedEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2BasicAuthenticationRequestedEventArgs struct {
 }
 
 func NewICoreWebView2BasicAuthenticationRequestedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2BasicAuthenticationRequestedEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2BasicAuthenticationRequestedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -48,7 +48,7 @@ func (this *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetChallenge(cha
 func (this *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetResponse(response **ICoreWebView2BasicAuthenticationResponse) com.Error {
 	addr := (*this.LpVtbl)[5]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(response)))
-		com.AddToScope(response)
+	com.AddToScope(response)
 	return com.Error(ret)
 }
 
@@ -67,7 +67,6 @@ func (this *ICoreWebView2BasicAuthenticationRequestedEventArgs) SetCancel(cancel
 func (this *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[8]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-		com.AddToScope(deferral)
+	com.AddToScope(deferral)
 	return com.Error(ret)
 }
-

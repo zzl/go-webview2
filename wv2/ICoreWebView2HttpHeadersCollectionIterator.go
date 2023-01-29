@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0702FC30-F43B-47BB-AB52-A42CB552AD9F
-var IID_ICoreWebView2HttpHeadersCollectionIterator = syscall.GUID{0x0702FC30, 0xF43B, 0x47BB, 
+var IID_ICoreWebView2HttpHeadersCollectionIterator = syscall.GUID{0x0702FC30, 0xF43B, 0x47BB,
 	[8]byte{0xAB, 0x52, 0xA4, 0x2C, 0xB5, 0x52, 0xAD, 0x9F}}
 
 type ICoreWebView2HttpHeadersCollectionIterator struct {
@@ -16,8 +16,8 @@ type ICoreWebView2HttpHeadersCollectionIterator struct {
 }
 
 func NewICoreWebView2HttpHeadersCollectionIterator(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2HttpHeadersCollectionIterator {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2HttpHeadersCollectionIterator)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -50,4 +50,3 @@ func (this *ICoreWebView2HttpHeadersCollectionIterator) MoveNext(hasNext *int32)
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(hasNext)))
 	return com.Error(ret)
 }
-

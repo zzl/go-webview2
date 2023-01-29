@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 49511172-CC67-4BCA-9923-137112F4C4CC
-var IID_ICoreWebView2ExecuteScriptCompletedHandler = syscall.GUID{0x49511172, 0xCC67, 0x4BCA, 
+var IID_ICoreWebView2ExecuteScriptCompletedHandler = syscall.GUID{0x49511172, 0xCC67, 0x4BCA,
 	[8]byte{0x99, 0x23, 0x13, 0x71, 0x12, 0xF4, 0xC4, 0xCC}}
 
 type ICoreWebView2ExecuteScriptCompletedHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2ExecuteScriptCompletedHandlerImpl) Invoke(errorCode com
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2ExecuteScriptCompletedHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2ExecuteScriptCompletedHandlerComObj) BuildVtbl(lock boo
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2ExecuteScriptCompletedHandlerVtbl != nil {
 		return _pICoreWebView2ExecuteScriptCompletedHandlerVtbl
 	}
 	_pICoreWebView2ExecuteScriptCompletedHandlerVtbl = &ICoreWebView2ExecuteScriptCompletedHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2ExecuteScriptCompletedHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2ExecuteScriptCompletedHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2ExecuteScriptCompletedHandlerVtbl
 }
 
-func (this *ICoreWebView2ExecuteScriptCompletedHandlerComObj) ICoreWebView2ExecuteScriptCompletedHandler() *ICoreWebView2ExecuteScriptCompletedHandler{
+func (this *ICoreWebView2ExecuteScriptCompletedHandlerComObj) ICoreWebView2ExecuteScriptCompletedHandler() *ICoreWebView2ExecuteScriptCompletedHandler {
 	return (*ICoreWebView2ExecuteScriptCompletedHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2ExecuteScriptCompletedHandlerComObj(impl ICoreWebView2Execu
 }
 
 func NewICoreWebView2ExecuteScriptCompletedHandler(impl ICoreWebView2ExecuteScriptCompletedHandlerInterface) *ICoreWebView2ExecuteScriptCompletedHandler {
-	return NewICoreWebView2ExecuteScriptCompletedHandlerComObj(impl, true).ICoreWebView2ExecuteScriptCompletedHandler()}
+	return NewICoreWebView2ExecuteScriptCompletedHandlerComObj(impl, true).ICoreWebView2ExecuteScriptCompletedHandler()
+}
 
 //
 type ICoreWebView2ExecuteScriptCompletedHandlerByFuncImpl struct {
 	ICoreWebView2ExecuteScriptCompletedHandlerImpl
-	handlerFunc func (errorCode com.Error, resultObjectAsJson string) com.Error
+	handlerFunc func(errorCode com.Error, resultObjectAsJson string) com.Error
 }
-func (this *ICoreWebView2ExecuteScriptCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, resultObjectAsJson string) com.Error{
+
+func (this *ICoreWebView2ExecuteScriptCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, resultObjectAsJson string) com.Error {
 	return this.handlerFunc(errorCode, resultObjectAsJson)
 }
 
-func NewICoreWebView2ExecuteScriptCompletedHandlerByFunc(handlerFunc func (errorCode com.Error, resultObjectAsJson string) com.Error, scoped bool) *ICoreWebView2ExecuteScriptCompletedHandler {
+func NewICoreWebView2ExecuteScriptCompletedHandlerByFunc(handlerFunc func(errorCode com.Error, resultObjectAsJson string) com.Error, scoped bool) *ICoreWebView2ExecuteScriptCompletedHandler {
 	impl := &ICoreWebView2ExecuteScriptCompletedHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2ExecuteScriptCompletedHandlerComObj(impl, scoped).ICoreWebView2ExecuteScriptCompletedHandler()
 }

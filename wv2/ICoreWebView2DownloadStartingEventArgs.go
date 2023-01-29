@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // E99BBE21-43E9-4544-A732-282764EAFA60
-var IID_ICoreWebView2DownloadStartingEventArgs = syscall.GUID{0xE99BBE21, 0x43E9, 0x4544, 
+var IID_ICoreWebView2DownloadStartingEventArgs = syscall.GUID{0xE99BBE21, 0x43E9, 0x4544,
 	[8]byte{0xA7, 0x32, 0x28, 0x27, 0x64, 0xEA, 0xFA, 0x60}}
 
 type ICoreWebView2DownloadStartingEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2DownloadStartingEventArgs struct {
 }
 
 func NewICoreWebView2DownloadStartingEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2DownloadStartingEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2DownloadStartingEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,7 +36,7 @@ func (this *ICoreWebView2DownloadStartingEventArgs) IID() *syscall.GUID {
 func (this *ICoreWebView2DownloadStartingEventArgs) GetDownloadOperation(downloadOperation **ICoreWebView2DownloadOperation) com.Error {
 	addr := (*this.LpVtbl)[3]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(downloadOperation)))
-		com.AddToScope(downloadOperation)
+	com.AddToScope(downloadOperation)
 	return com.Error(ret)
 }
 
@@ -79,7 +79,6 @@ func (this *ICoreWebView2DownloadStartingEventArgs) SetHandled(handled int32) co
 func (this *ICoreWebView2DownloadStartingEventArgs) GetDeferral(deferral **ICoreWebView2Deferral) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(deferral)))
-		com.AddToScope(deferral)
+	com.AddToScope(deferral)
 	return com.Error(ret)
 }
-

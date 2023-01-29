@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // F7F6F714-5D2A-43C6-9503-346ECE02D186
-var IID_ICoreWebView2CookieList = syscall.GUID{0xF7F6F714, 0x5D2A, 0x43C6, 
+var IID_ICoreWebView2CookieList = syscall.GUID{0xF7F6F714, 0x5D2A, 0x43C6,
 	[8]byte{0x95, 0x03, 0x34, 0x6E, 0xCE, 0x02, 0xD1, 0x86}}
 
 type ICoreWebView2CookieList struct {
@@ -16,8 +16,8 @@ type ICoreWebView2CookieList struct {
 }
 
 func NewICoreWebView2CookieList(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2CookieList {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2CookieList)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -42,7 +42,7 @@ func (this *ICoreWebView2CookieList) GetCount(count *uint32) com.Error {
 func (this *ICoreWebView2CookieList) GetValueAtIndex(index uint32, cookie **ICoreWebView2Cookie) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(cookie)))
-		com.AddToScope(cookie)
+	com.AddToScope(cookie)
 	return com.Error(ret)
 }
 

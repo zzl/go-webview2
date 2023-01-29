@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 828E8AB6-D94C-4264-9CEF-5217170D6251
-var IID_ICoreWebView2BytesReceivedChangedEventHandler = syscall.GUID{0x828E8AB6, 0xD94C, 0x4264, 
+var IID_ICoreWebView2BytesReceivedChangedEventHandler = syscall.GUID{0x828E8AB6, 0xD94C, 0x4264,
 	[8]byte{0x9C, 0xEF, 0x52, 0x17, 0x17, 0x0D, 0x62, 0x51}}
 
 type ICoreWebView2BytesReceivedChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2BytesReceivedChangedEventHandlerImpl) Invoke(sender *IC
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2BytesReceivedChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2BytesReceivedChangedEventHandlerComObj) BuildVtbl(lock 
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2BytesReceivedChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2BytesReceivedChangedEventHandlerVtbl
 	}
 	_pICoreWebView2BytesReceivedChangedEventHandlerVtbl = &ICoreWebView2BytesReceivedChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2BytesReceivedChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2BytesReceivedChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2BytesReceivedChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2BytesReceivedChangedEventHandlerComObj) ICoreWebView2BytesReceivedChangedEventHandler() *ICoreWebView2BytesReceivedChangedEventHandler{
+func (this *ICoreWebView2BytesReceivedChangedEventHandlerComObj) ICoreWebView2BytesReceivedChangedEventHandler() *ICoreWebView2BytesReceivedChangedEventHandler {
 	return (*ICoreWebView2BytesReceivedChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2BytesReceivedChangedEventHandlerComObj(impl ICoreWebView2By
 }
 
 func NewICoreWebView2BytesReceivedChangedEventHandler(impl ICoreWebView2BytesReceivedChangedEventHandlerInterface) *ICoreWebView2BytesReceivedChangedEventHandler {
-	return NewICoreWebView2BytesReceivedChangedEventHandlerComObj(impl, true).ICoreWebView2BytesReceivedChangedEventHandler()}
+	return NewICoreWebView2BytesReceivedChangedEventHandlerComObj(impl, true).ICoreWebView2BytesReceivedChangedEventHandler()
+}
 
 //
 type ICoreWebView2BytesReceivedChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2BytesReceivedChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2BytesReceivedChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2BytesReceivedChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2BytesReceivedChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2BytesReceivedChangedEventHandler {
+func NewICoreWebView2BytesReceivedChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2BytesReceivedChangedEventHandler {
 	impl := &ICoreWebView2BytesReceivedChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2BytesReceivedChangedEventHandlerComObj(impl, scoped).ICoreWebView2BytesReceivedChangedEventHandler()
 }

@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 97055CD4-512C-4264-8B5F-E3F446CEA6A5
-var IID_ICoreWebView2WebResourceRequest = syscall.GUID{0x97055CD4, 0x512C, 0x4264, 
+var IID_ICoreWebView2WebResourceRequest = syscall.GUID{0x97055CD4, 0x512C, 0x4264,
 	[8]byte{0x8B, 0x5F, 0xE3, 0xF4, 0x46, 0xCE, 0xA6, 0xA5}}
 
 type ICoreWebView2WebResourceRequest struct {
@@ -16,8 +16,8 @@ type ICoreWebView2WebResourceRequest struct {
 }
 
 func NewICoreWebView2WebResourceRequest(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2WebResourceRequest {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2WebResourceRequest)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -60,7 +60,7 @@ func (this *ICoreWebView2WebResourceRequest) SetMethod(method string) com.Error 
 func (this *ICoreWebView2WebResourceRequest) GetContent(content **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(content)))
-		com.AddToScope(content)
+	com.AddToScope(content)
 	return com.Error(ret)
 }
 
@@ -73,7 +73,6 @@ func (this *ICoreWebView2WebResourceRequest) SetContent(content *win32.IStream) 
 func (this *ICoreWebView2WebResourceRequest) GetHeaders(headers **ICoreWebView2HttpRequestHeaders) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(headers)))
-		com.AddToScope(headers)
+	com.AddToScope(headers)
 	return com.Error(ret)
 }
-

@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 28F0D425-93FE-4E63-9F8D-2AEEC6D3BA1E
-var IID_ICoreWebView2EstimatedEndTimeChangedEventHandler = syscall.GUID{0x28F0D425, 0x93FE, 0x4E63, 
+var IID_ICoreWebView2EstimatedEndTimeChangedEventHandler = syscall.GUID{0x28F0D425, 0x93FE, 0x4E63,
 	[8]byte{0x9F, 0x8D, 0x2A, 0xEE, 0xC6, 0xD3, 0xBA, 0x1E}}
 
 type ICoreWebView2EstimatedEndTimeChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerImpl) Invoke(sender 
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2EstimatedEndTimeChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerComObj) BuildVtbl(lo
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2EstimatedEndTimeChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2EstimatedEndTimeChangedEventHandlerVtbl
 	}
 	_pICoreWebView2EstimatedEndTimeChangedEventHandlerVtbl = &ICoreWebView2EstimatedEndTimeChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2EstimatedEndTimeChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2EstimatedEndTimeChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2EstimatedEndTimeChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerComObj) ICoreWebView2EstimatedEndTimeChangedEventHandler() *ICoreWebView2EstimatedEndTimeChangedEventHandler{
+func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerComObj) ICoreWebView2EstimatedEndTimeChangedEventHandler() *ICoreWebView2EstimatedEndTimeChangedEventHandler {
 	return (*ICoreWebView2EstimatedEndTimeChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2EstimatedEndTimeChangedEventHandlerComObj(impl ICoreWebView
 }
 
 func NewICoreWebView2EstimatedEndTimeChangedEventHandler(impl ICoreWebView2EstimatedEndTimeChangedEventHandlerInterface) *ICoreWebView2EstimatedEndTimeChangedEventHandler {
-	return NewICoreWebView2EstimatedEndTimeChangedEventHandlerComObj(impl, true).ICoreWebView2EstimatedEndTimeChangedEventHandler()}
+	return NewICoreWebView2EstimatedEndTimeChangedEventHandlerComObj(impl, true).ICoreWebView2EstimatedEndTimeChangedEventHandler()
+}
 
 //
 type ICoreWebView2EstimatedEndTimeChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2EstimatedEndTimeChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2EstimatedEndTimeChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2EstimatedEndTimeChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2EstimatedEndTimeChangedEventHandler {
+func NewICoreWebView2EstimatedEndTimeChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2EstimatedEndTimeChangedEventHandler {
 	impl := &ICoreWebView2EstimatedEndTimeChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2EstimatedEndTimeChangedEventHandlerComObj(impl, scoped).ICoreWebView2EstimatedEndTimeChangedEventHandler()
 }

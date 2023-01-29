@@ -5,7 +5,7 @@ import (
 	"github.com/zzl/go-com/ole"
 	"github.com/zzl/go-com/ole/oleimpl"
 	"github.com/zzl/go-webview2/wv2"
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"log"
 	"net"
 	"net/http"

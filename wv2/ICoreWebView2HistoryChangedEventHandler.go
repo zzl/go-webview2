@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // C79A420C-EFD9-4058-9295-3E8B4BCAB645
-var IID_ICoreWebView2HistoryChangedEventHandler = syscall.GUID{0xC79A420C, 0xEFD9, 0x4058, 
+var IID_ICoreWebView2HistoryChangedEventHandler = syscall.GUID{0xC79A420C, 0xEFD9, 0x4058,
 	[8]byte{0x92, 0x95, 0x3E, 0x8B, 0x4B, 0xCA, 0xB6, 0x45}}
 
 type ICoreWebView2HistoryChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2HistoryChangedEventHandlerImpl) Invoke(sender *ICoreWeb
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2HistoryChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2HistoryChangedEventHandlerComObj) BuildVtbl(lock bool) 
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2HistoryChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2HistoryChangedEventHandlerVtbl
 	}
 	_pICoreWebView2HistoryChangedEventHandlerVtbl = &ICoreWebView2HistoryChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2HistoryChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2HistoryChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2HistoryChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2HistoryChangedEventHandlerComObj) ICoreWebView2HistoryChangedEventHandler() *ICoreWebView2HistoryChangedEventHandler{
+func (this *ICoreWebView2HistoryChangedEventHandlerComObj) ICoreWebView2HistoryChangedEventHandler() *ICoreWebView2HistoryChangedEventHandler {
 	return (*ICoreWebView2HistoryChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,19 +94,19 @@ func NewICoreWebView2HistoryChangedEventHandlerComObj(impl ICoreWebView2HistoryC
 }
 
 func NewICoreWebView2HistoryChangedEventHandler(impl ICoreWebView2HistoryChangedEventHandlerInterface) *ICoreWebView2HistoryChangedEventHandler {
-	return NewICoreWebView2HistoryChangedEventHandlerComObj(impl, true).ICoreWebView2HistoryChangedEventHandler()}
+	return NewICoreWebView2HistoryChangedEventHandlerComObj(impl, true).ICoreWebView2HistoryChangedEventHandler()
+}
 
-//
 type ICoreWebView2HistoryChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2HistoryChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2HistoryChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2HistoryChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2HistoryChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2HistoryChangedEventHandler {
+func NewICoreWebView2HistoryChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2HistoryChangedEventHandler {
 	impl := &ICoreWebView2HistoryChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2HistoryChangedEventHandlerComObj(impl, scoped).ICoreWebView2HistoryChangedEventHandler()
 }
-

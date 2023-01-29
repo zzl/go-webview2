@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 4D7B2EAB-9FDC-468D-B998-A9260B5ED651
-var IID_ICoreWebView2_9 = syscall.GUID{0x4D7B2EAB, 0x9FDC, 0x468D, 
+var IID_ICoreWebView2_9 = syscall.GUID{0x4D7B2EAB, 0x9FDC, 0x468D,
 	[8]byte{0xB9, 0x98, 0xA9, 0x26, 0x0B, 0x5E, 0xD6, 0x51}}
 
 type ICoreWebView2_9 struct {
@@ -16,8 +16,8 @@ type ICoreWebView2_9 struct {
 }
 
 func NewICoreWebView2_9(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2_9 {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2_9)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -86,4 +86,3 @@ func (this *ICoreWebView2_9) SetDefaultDownloadDialogMargin(value TagPOINT) com.
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), *(*uintptr)(unsafe.Pointer(&value)))
 	return com.Error(ret)
 }
-

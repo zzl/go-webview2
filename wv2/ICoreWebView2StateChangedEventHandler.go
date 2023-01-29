@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 81336594-7EDE-4BA9-BF71-ACF0A95B58DD
-var IID_ICoreWebView2StateChangedEventHandler = syscall.GUID{0x81336594, 0x7EDE, 0x4BA9, 
+var IID_ICoreWebView2StateChangedEventHandler = syscall.GUID{0x81336594, 0x7EDE, 0x4BA9,
 	[8]byte{0xBF, 0x71, 0xAC, 0xF0, 0xA9, 0x5B, 0x58, 0xDD}}
 
 type ICoreWebView2StateChangedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2StateChangedEventHandlerImpl) Invoke(sender *ICoreWebVi
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2StateChangedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2StateChangedEventHandlerComObj) BuildVtbl(lock bool) *I
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2StateChangedEventHandlerVtbl != nil {
 		return _pICoreWebView2StateChangedEventHandlerVtbl
 	}
 	_pICoreWebView2StateChangedEventHandlerVtbl = &ICoreWebView2StateChangedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2StateChangedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2StateChangedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2StateChangedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2StateChangedEventHandlerComObj) ICoreWebView2StateChangedEventHandler() *ICoreWebView2StateChangedEventHandler{
+func (this *ICoreWebView2StateChangedEventHandlerComObj) ICoreWebView2StateChangedEventHandler() *ICoreWebView2StateChangedEventHandler {
 	return (*ICoreWebView2StateChangedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2StateChangedEventHandlerComObj(impl ICoreWebView2StateChang
 }
 
 func NewICoreWebView2StateChangedEventHandler(impl ICoreWebView2StateChangedEventHandlerInterface) *ICoreWebView2StateChangedEventHandler {
-	return NewICoreWebView2StateChangedEventHandlerComObj(impl, true).ICoreWebView2StateChangedEventHandler()}
+	return NewICoreWebView2StateChangedEventHandlerComObj(impl, true).ICoreWebView2StateChangedEventHandler()
+}
 
 //
 type ICoreWebView2StateChangedEventHandlerByFuncImpl struct {
 	ICoreWebView2StateChangedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2StateChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2StateChangedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2StateChangedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2StateChangedEventHandler {
+func NewICoreWebView2StateChangedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2DownloadOperation, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2StateChangedEventHandler {
 	impl := &ICoreWebView2StateChangedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2StateChangedEventHandlerComObj(impl, scoped).ICoreWebView2StateChangedEventHandler()
 }

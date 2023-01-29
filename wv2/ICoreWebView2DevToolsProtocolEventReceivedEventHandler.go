@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // E2FDA4BE-5456-406C-A261-3D452138362C
-var IID_ICoreWebView2DevToolsProtocolEventReceivedEventHandler = syscall.GUID{0xE2FDA4BE, 0x5456, 0x406C, 
+var IID_ICoreWebView2DevToolsProtocolEventReceivedEventHandler = syscall.GUID{0xE2FDA4BE, 0x5456, 0x406C,
 	[8]byte{0xA2, 0x61, 0x3D, 0x45, 0x21, 0x38, 0x36, 0x2C}}
 
 type ICoreWebView2DevToolsProtocolEventReceivedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2DevToolsProtocolEventReceivedEventHandlerImpl) Invoke(s
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2DevToolsProtocolEventReceivedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2DevToolsProtocolEventReceivedEventHandlerComObj) BuildV
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2DevToolsProtocolEventReceivedEventHandlerVtbl != nil {
 		return _pICoreWebView2DevToolsProtocolEventReceivedEventHandlerVtbl
 	}
 	_pICoreWebView2DevToolsProtocolEventReceivedEventHandlerVtbl = &ICoreWebView2DevToolsProtocolEventReceivedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2DevToolsProtocolEventReceivedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2DevToolsProtocolEventReceivedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2DevToolsProtocolEventReceivedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2DevToolsProtocolEventReceivedEventHandlerComObj) ICoreWebView2DevToolsProtocolEventReceivedEventHandler() *ICoreWebView2DevToolsProtocolEventReceivedEventHandler{
+func (this *ICoreWebView2DevToolsProtocolEventReceivedEventHandlerComObj) ICoreWebView2DevToolsProtocolEventReceivedEventHandler() *ICoreWebView2DevToolsProtocolEventReceivedEventHandler {
 	return (*ICoreWebView2DevToolsProtocolEventReceivedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2DevToolsProtocolEventReceivedEventHandlerComObj(impl ICoreW
 }
 
 func NewICoreWebView2DevToolsProtocolEventReceivedEventHandler(impl ICoreWebView2DevToolsProtocolEventReceivedEventHandlerInterface) *ICoreWebView2DevToolsProtocolEventReceivedEventHandler {
-	return NewICoreWebView2DevToolsProtocolEventReceivedEventHandlerComObj(impl, true).ICoreWebView2DevToolsProtocolEventReceivedEventHandler()}
+	return NewICoreWebView2DevToolsProtocolEventReceivedEventHandlerComObj(impl, true).ICoreWebView2DevToolsProtocolEventReceivedEventHandler()
+}
 
 //
 type ICoreWebView2DevToolsProtocolEventReceivedEventHandlerByFuncImpl struct {
 	ICoreWebView2DevToolsProtocolEventReceivedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) com.Error
 }
-func (this *ICoreWebView2DevToolsProtocolEventReceivedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) com.Error{
+
+func (this *ICoreWebView2DevToolsProtocolEventReceivedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2DevToolsProtocolEventReceivedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) com.Error, scoped bool) *ICoreWebView2DevToolsProtocolEventReceivedEventHandler {
+func NewICoreWebView2DevToolsProtocolEventReceivedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) com.Error, scoped bool) *ICoreWebView2DevToolsProtocolEventReceivedEventHandler {
 	impl := &ICoreWebView2DevToolsProtocolEventReceivedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2DevToolsProtocolEventReceivedEventHandlerComObj(impl, scoped).ICoreWebView2DevToolsProtocolEventReceivedEventHandler()
 }

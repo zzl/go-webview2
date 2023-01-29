@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 8155A9A4-1474-4A86-8CAE-151B0FA6B8CA
-var IID_ICoreWebView2ProcessFailedEventArgs = syscall.GUID{0x8155A9A4, 0x1474, 0x4A86, 
+var IID_ICoreWebView2ProcessFailedEventArgs = syscall.GUID{0x8155A9A4, 0x1474, 0x4A86,
 	[8]byte{0x8C, 0xAE, 0x15, 0x1B, 0x0F, 0xA6, 0xB8, 0xCA}}
 
 type ICoreWebView2ProcessFailedEventArgs struct {
@@ -16,8 +16,8 @@ type ICoreWebView2ProcessFailedEventArgs struct {
 }
 
 func NewICoreWebView2ProcessFailedEventArgs(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2ProcessFailedEventArgs {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2ProcessFailedEventArgs)(unsafe.Pointer(pUnk))
 	if addRef {

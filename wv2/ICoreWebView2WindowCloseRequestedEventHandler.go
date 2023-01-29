@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 5C19E9E0-092F-486B-AFFA-CA8231913039
-var IID_ICoreWebView2WindowCloseRequestedEventHandler = syscall.GUID{0x5C19E9E0, 0x092F, 0x486B, 
+var IID_ICoreWebView2WindowCloseRequestedEventHandler = syscall.GUID{0x5C19E9E0, 0x092F, 0x486B,
 	[8]byte{0xAF, 0xFA, 0xCA, 0x82, 0x31, 0x91, 0x30, 0x39}}
 
 type ICoreWebView2WindowCloseRequestedEventHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2WindowCloseRequestedEventHandlerImpl) Invoke(sender *IC
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2WindowCloseRequestedEventHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2WindowCloseRequestedEventHandlerComObj) BuildVtbl(lock 
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2WindowCloseRequestedEventHandlerVtbl != nil {
 		return _pICoreWebView2WindowCloseRequestedEventHandlerVtbl
 	}
 	_pICoreWebView2WindowCloseRequestedEventHandlerVtbl = &ICoreWebView2WindowCloseRequestedEventHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2WindowCloseRequestedEventHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2WindowCloseRequestedEventHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2WindowCloseRequestedEventHandlerVtbl
 }
 
-func (this *ICoreWebView2WindowCloseRequestedEventHandlerComObj) ICoreWebView2WindowCloseRequestedEventHandler() *ICoreWebView2WindowCloseRequestedEventHandler{
+func (this *ICoreWebView2WindowCloseRequestedEventHandlerComObj) ICoreWebView2WindowCloseRequestedEventHandler() *ICoreWebView2WindowCloseRequestedEventHandler {
 	return (*ICoreWebView2WindowCloseRequestedEventHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2WindowCloseRequestedEventHandlerComObj(impl ICoreWebView2Wi
 }
 
 func NewICoreWebView2WindowCloseRequestedEventHandler(impl ICoreWebView2WindowCloseRequestedEventHandlerInterface) *ICoreWebView2WindowCloseRequestedEventHandler {
-	return NewICoreWebView2WindowCloseRequestedEventHandlerComObj(impl, true).ICoreWebView2WindowCloseRequestedEventHandler()}
+	return NewICoreWebView2WindowCloseRequestedEventHandlerComObj(impl, true).ICoreWebView2WindowCloseRequestedEventHandler()
+}
 
 //
 type ICoreWebView2WindowCloseRequestedEventHandlerByFuncImpl struct {
 	ICoreWebView2WindowCloseRequestedEventHandlerImpl
-	handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error
+	handlerFunc func(sender *ICoreWebView2, args *win32.IUnknown) com.Error
 }
-func (this *ICoreWebView2WindowCloseRequestedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error{
+
+func (this *ICoreWebView2WindowCloseRequestedEventHandlerByFuncImpl) Invoke(sender *ICoreWebView2, args *win32.IUnknown) com.Error {
 	return this.handlerFunc(sender, args)
 }
 
-func NewICoreWebView2WindowCloseRequestedEventHandlerByFunc(handlerFunc func (sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2WindowCloseRequestedEventHandler {
+func NewICoreWebView2WindowCloseRequestedEventHandlerByFunc(handlerFunc func(sender *ICoreWebView2, args *win32.IUnknown) com.Error, scoped bool) *ICoreWebView2WindowCloseRequestedEventHandler {
 	impl := &ICoreWebView2WindowCloseRequestedEventHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2WindowCloseRequestedEventHandlerComObj(impl, scoped).ICoreWebView2WindowCloseRequestedEventHandler()
 }

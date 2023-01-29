@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // B96D755E-0319-4E92-A296-23436F46A1FC
-var IID_ICoreWebView2Environment = syscall.GUID{0xB96D755E, 0x0319, 0x4E92, 
+var IID_ICoreWebView2Environment = syscall.GUID{0xB96D755E, 0x0319, 0x4E92,
 	[8]byte{0xA2, 0x96, 0x23, 0x43, 0x6F, 0x46, 0xA1, 0xFC}}
 
 type ICoreWebView2Environment struct {
@@ -16,8 +16,8 @@ type ICoreWebView2Environment struct {
 }
 
 func NewICoreWebView2Environment(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2Environment {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2Environment)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -42,7 +42,7 @@ func (this *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow 
 func (this *ICoreWebView2Environment) CreateWebResourceResponse(content *win32.IStream, statusCode int32, reasonPhrase string, headers string, response **ICoreWebView2WebResourceResponse) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(content)), uintptr(statusCode), uintptr(win32.StrToPointer(reasonPhrase)), uintptr(win32.StrToPointer(headers)), uintptr(unsafe.Pointer(response)))
-		com.AddToScope(response)
+	com.AddToScope(response)
 	return com.Error(ret)
 }
 
@@ -63,4 +63,3 @@ func (this *ICoreWebView2Environment) Remove_NewBrowserVersionAvailable(token Ev
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), *(*uintptr)(unsafe.Pointer(&token)))
 	return com.Error(ret)
 }
-

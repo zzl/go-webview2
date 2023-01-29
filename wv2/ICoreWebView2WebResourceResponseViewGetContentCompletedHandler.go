@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 875738E1-9FA2-40E3-8B74-2E8972DD6FE7
-var IID_ICoreWebView2WebResourceResponseViewGetContentCompletedHandler = syscall.GUID{0x875738E1, 0x9FA2, 0x40E3, 
+var IID_ICoreWebView2WebResourceResponseViewGetContentCompletedHandler = syscall.GUID{0x875738E1, 0x9FA2, 0x40E3,
 	[8]byte{0x8B, 0x74, 0x2E, 0x89, 0x72, 0xDD, 0x6F, 0xE7}}
 
 type ICoreWebView2WebResourceResponseViewGetContentCompletedHandler struct {
@@ -42,6 +42,7 @@ func (this *ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerImpl) 
 	var ret com.Error
 	return ret
 }
+
 type ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerVtbl struct {
 	win32.IUnknownVtbl
 	Invoke uintptr
@@ -65,18 +66,18 @@ func (this *ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerComObj
 	if lock {
 		com.MuVtbl.Lock()
 		defer com.MuVtbl.Unlock()
-}
+	}
 	if _pICoreWebView2WebResourceResponseViewGetContentCompletedHandlerVtbl != nil {
 		return _pICoreWebView2WebResourceResponseViewGetContentCompletedHandlerVtbl
 	}
 	_pICoreWebView2WebResourceResponseViewGetContentCompletedHandlerVtbl = &ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerVtbl{
 		IUnknownVtbl: *this.IUnknownComObj.BuildVtbl(false),
-		Invoke:	syscall.NewCallback((*ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerComObj).Invoke),
+		Invoke:       syscall.NewCallback((*ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerComObj).Invoke),
 	}
 	return _pICoreWebView2WebResourceResponseViewGetContentCompletedHandlerVtbl
 }
 
-func (this *ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerComObj) ICoreWebView2WebResourceResponseViewGetContentCompletedHandler() *ICoreWebView2WebResourceResponseViewGetContentCompletedHandler{
+func (this *ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerComObj) ICoreWebView2WebResourceResponseViewGetContentCompletedHandler() *ICoreWebView2WebResourceResponseViewGetContentCompletedHandler {
 	return (*ICoreWebView2WebResourceResponseViewGetContentCompletedHandler)(unsafe.Pointer(this))
 }
 
@@ -93,18 +94,20 @@ func NewICoreWebView2WebResourceResponseViewGetContentCompletedHandlerComObj(imp
 }
 
 func NewICoreWebView2WebResourceResponseViewGetContentCompletedHandler(impl ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerInterface) *ICoreWebView2WebResourceResponseViewGetContentCompletedHandler {
-	return NewICoreWebView2WebResourceResponseViewGetContentCompletedHandlerComObj(impl, true).ICoreWebView2WebResourceResponseViewGetContentCompletedHandler()}
+	return NewICoreWebView2WebResourceResponseViewGetContentCompletedHandlerComObj(impl, true).ICoreWebView2WebResourceResponseViewGetContentCompletedHandler()
+}
 
 //
 type ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerByFuncImpl struct {
 	ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerImpl
-	handlerFunc func (errorCode com.Error, content *win32.IStream) com.Error
+	handlerFunc func(errorCode com.Error, content *win32.IStream) com.Error
 }
-func (this *ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, content *win32.IStream) com.Error{
+
+func (this *ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerByFuncImpl) Invoke(errorCode com.Error, content *win32.IStream) com.Error {
 	return this.handlerFunc(errorCode, content)
 }
 
-func NewICoreWebView2WebResourceResponseViewGetContentCompletedHandlerByFunc(handlerFunc func (errorCode com.Error, content *win32.IStream) com.Error, scoped bool) *ICoreWebView2WebResourceResponseViewGetContentCompletedHandler {
+func NewICoreWebView2WebResourceResponseViewGetContentCompletedHandlerByFunc(handlerFunc func(errorCode com.Error, content *win32.IStream) com.Error, scoped bool) *ICoreWebView2WebResourceResponseViewGetContentCompletedHandler {
 	impl := &ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerByFuncImpl{handlerFunc: handlerFunc}
 	return NewICoreWebView2WebResourceResponseViewGetContentCompletedHandlerComObj(impl, scoped).ICoreWebView2WebResourceResponseViewGetContentCompletedHandler()
 }

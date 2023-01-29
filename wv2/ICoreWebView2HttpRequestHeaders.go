@@ -1,14 +1,14 @@
 package wv2
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // E86CAC0E-5523-465C-B536-8FB9FC8C8C60
-var IID_ICoreWebView2HttpRequestHeaders = syscall.GUID{0xE86CAC0E, 0x5523, 0x465C, 
+var IID_ICoreWebView2HttpRequestHeaders = syscall.GUID{0xE86CAC0E, 0x5523, 0x465C,
 	[8]byte{0xB5, 0x36, 0x8F, 0xB9, 0xFC, 0x8C, 0x8C, 0x60}}
 
 type ICoreWebView2HttpRequestHeaders struct {
@@ -16,8 +16,8 @@ type ICoreWebView2HttpRequestHeaders struct {
 }
 
 func NewICoreWebView2HttpRequestHeaders(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICoreWebView2HttpRequestHeaders {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICoreWebView2HttpRequestHeaders)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -42,7 +42,7 @@ func (this *ICoreWebView2HttpRequestHeaders) GetHeader(name string, value *win32
 func (this *ICoreWebView2HttpRequestHeaders) GetHeaders(name string, iterator **ICoreWebView2HttpHeadersCollectionIterator) com.Error {
 	addr := (*this.LpVtbl)[4]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(name)), uintptr(unsafe.Pointer(iterator)))
-		com.AddToScope(iterator)
+	com.AddToScope(iterator)
 	return com.Error(ret)
 }
 
@@ -67,7 +67,7 @@ func (this *ICoreWebView2HttpRequestHeaders) RemoveHeader(name string) com.Error
 func (this *ICoreWebView2HttpRequestHeaders) GetIterator(iterator **ICoreWebView2HttpHeadersCollectionIterator) com.Error {
 	addr := (*this.LpVtbl)[8]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(iterator)))
-		com.AddToScope(iterator)
+	com.AddToScope(iterator)
 	return com.Error(ret)
 }
 
